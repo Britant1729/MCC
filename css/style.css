@@ -30,14 +30,12 @@ footer {
     background-color: #003366;
     color: white;
     text-align: center;
-    padding: 10px;
+    padding: 5px; /* Reduced padding to decrease height */
     position: fixed;
     bottom: 0;
-    width: 50%; /* Reduced width (adjust as needed, e.g., 50%, 500px, etc.) */
-    max-width: 600px; /* Optional: ensures it doesn't get too wide on large screens */
-    margin: 0 auto; /* Centers the footer */
-    left: 0;
-    right: 0;
+    width: 100%; /* Reverted to full width as height was the focus */
+    font-size: 0.8em; /* Smaller font size to reduce height */
+    line-height: 1.2; /* Adjusted line height for compactness */
 }
 article {
     margin-bottom: 20px;
