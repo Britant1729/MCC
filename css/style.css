@@ -26,15 +26,20 @@ main {
     max-width: 800px;
     margin: 0 auto;
     background: white;
+
+    /* ✅ extra space so footer doesn’t overlap content */
+    padding-bottom: 70px;
 }
 footer {
     background-color: #003366;
     color: white;
     text-align: center;
-    padding: 10px;
+    padding: 2px; /* compact */
+    position: fixed;
+    bottom: 0;
+    width: 100%;
     font-size: 0.8em;
     line-height: 1.2;
-    position: static; /* ⬅ instead of fixed */
 }
 article {
     margin-bottom: 20px;
