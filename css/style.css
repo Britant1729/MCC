@@ -31,12 +31,10 @@ footer {
     background-color: #003366;
     color: white;
     text-align: center;
-    padding: 2px; /* Reduced padding to decrease height */
-    position: fixed;
-    bottom: 0;
-    width: 100%; /* Full width */
-    font-size: 0.8em; /* Smaller font size */
-    line-height: 1.2; /* Compact */
+    padding: 10px;
+    font-size: 0.8em;
+    line-height: 1.2;
+    position: static; /* ⬅ instead of fixed */
 }
 article {
     margin-bottom: 20px;
