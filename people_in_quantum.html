@@ -5,72 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MCC | People in Quantum</title>
   <link rel="stylesheet" href="css/style.css">
-  <style>
-    /* Tabs */
-    .tab-container {
-      display: flex;
-      justify-content: center;
-      margin: 20px 0;
-    }
-    .tab-container button {
-      background-color: #003366;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      cursor: pointer;
-      margin: 0 5px;
-      font-size: 16px;
-      border-radius: 5px;
-    }
-    .tab-container button.active,
-    .tab-container button:hover {
-      background-color: #0055aa;
-    }
-
-    /* Sections */
-    .tab-section {
-      display: none;
-    }
-    .tab-section.active {
-      display: block;
-    }
-
-    /* Profile Card */
-    .profile {
-      border: 1px solid #333;
-      margin: 20px 0;
-      display: flex;
-      padding: 15px;
-      background: white;
-    }
-    .profile img {
-      width: 180px;
-      height: 196px;
-      margin-right: 20px;
-    }
-    .profile-info {
-      flex: 1;
-    }
-    .profile-info h2 {
-      margin: 0;
-    }
-    .profile-info p {
-      margin: 5px 0;
-    }
-    .profile-info table {
-      border-collapse: collapse;
-      width: 100%;
-      margin-top: 10px;
-    }
-    .profile-info table td {
-      border: 1px solid #333;
-      padding: 8px;
-    }
-    .profile-info table td:first-child {
-      font-weight: bold;
-      width: 150px;
-    }
-  </style>
 </head>
 <body>
   <header>
@@ -102,14 +36,13 @@
 
       <!-- Tab Buttons -->
       <div class="tab-container">
-        <button class="tab-btn active" onclick="openTab('computing')">Quantum Computing</button>
-        <button class="tab-btn" onclick="openTab('communication')">Quantum Communication</button>
-        <button class="tab-btn" onclick="openTab('sensing')">Quantum Sensing</button>
-        <button class="tab-btn" onclick="openTab('materials')">Quantum Materials & Devices</button>
+        <button class="tab-btn active" onclick="openTab(event, 'computing')">Quantum Computing</button>
+        <button class="tab-btn" onclick="openTab(event, 'communication')">Quantum Communication</button>
+        <button class="tab-btn" onclick="openTab(event, 'sensing')">Quantum Sensing</button>
+        <button class="tab-btn" onclick="openTab(event, 'materials')">Quantum Materials & Devices</button>
       </div>
 
       <!-- Sections -->
-
       <div id="computing" class="tab-section active">
         <div class="profile">
           <img src="images/profile_placeholder.jpg" alt="Profile Picture">
@@ -117,11 +50,11 @@
             <h2>Name Here</h2>
             <p>Position, Quantum Computing</p>
             <table>
-              <tr><td>Designation</td><td>Professor</td></tr>
-              <tr><td>Affiliation</td><td>Department, Institute</td></tr>
-              <tr><td>Email id</td><td>example@email.com</td></tr>
-              <tr><td>Field of Research</td><td>Quantum Algorithms, QML, Optimization</td></tr>
-              <tr><td>Website link</td><td><a href="#">Website</a></td></tr>
+              <tr><td data-label="Designation">Professor</td></tr>
+              <tr><td data-label="Affiliation">Department, Institute</td></tr>
+              <tr><td data-label="Email id">example@email.com</td></tr>
+              <tr><td data-label="Field of Research">Quantum Algorithms, QML, Optimization</td></tr>
+              <tr><td data-label="Website link"><a href="#">Website</a></td></tr>
             </table>
           </div>
         </div>
@@ -134,11 +67,11 @@
             <h2>Anil Prabhakar</h2>
             <p>Project Director, Quantum Communication T-Hub, NQM</p>
             <table>
-              <tr><td>Designation</td><td>Professor</td></tr>
-              <tr><td>Affiliation</td><td>Department of Electrical Engineering, Indian Institute of Technology Madras</td></tr>
-              <tr><td>Email id</td><td>anilpr@ee.iitm.ac.in</td></tr>
-              <tr><td>Field of Research</td><td>Quantum Communication, Photonic Quantum Computing, Magnonics, Assistive Technologies</td></tr>
-              <tr><td>Website link</td><td><a href="https://www.ee.iitm.ac.in/faculty/profile/anilpr">Website</a></td></tr>
+              <tr><td data-label="Designation">Professor</td></tr>
+              <tr><td data-label="Affiliation">Department of Electrical Engineering, IIT Madras</td></tr>
+              <tr><td data-label="Email id">anilpr@ee.iitm.ac.in</td></tr>
+              <tr><td data-label="Field of Research">Quantum Communication, Photonic Quantum Computing, Magnonics, Assistive Technologies</td></tr>
+              <tr><td data-label="Website link"><a href="https://www.ee.iitm.ac.in/faculty/profile/anilpr">Website</a></td></tr>
             </table>
           </div>
         </div>
@@ -151,11 +84,11 @@
             <h2>Name Here</h2>
             <p>Researcher, Quantum Sensing</p>
             <table>
-              <tr><td>Designation</td><td>Scientist</td></tr>
-              <tr><td>Affiliation</td><td>Lab/Institute</td></tr>
-              <tr><td>Email id</td><td>example@email.com</td></tr>
-              <tr><td>Field of Research</td><td>Quantum Sensors, Quantum Metrology</td></tr>
-              <tr><td>Website link</td><td><a href="#">Website</a></td></tr>
+              <tr><td data-label="Designation">Scientist</td></tr>
+              <tr><td data-label="Affiliation">Lab/Institute</td></tr>
+              <tr><td data-label="Email id">example@email.com</td></tr>
+              <tr><td data-label="Field of Research">Quantum Sensors, Quantum Metrology</td></tr>
+              <tr><td data-label="Website link"><a href="#">Website</a></td></tr>
             </table>
           </div>
         </div>
@@ -168,11 +101,11 @@
             <h2>Name Here</h2>
             <p>Researcher, Quantum Materials</p>
             <table>
-              <tr><td>Designation</td><td>Assistant Professor</td></tr>
-              <tr><td>Affiliation</td><td>Department, Institute</td></tr>
-              <tr><td>Email id</td><td>example@email.com</td></tr>
-              <tr><td>Field of Research</td><td>Quantum Devices, Quantum Materials</td></tr>
-              <tr><td>Website link</td><td><a href="#">Website</a></td></tr>
+              <tr><td data-label="Designation">Assistant Professor</td></tr>
+              <tr><td data-label="Affiliation">Department, Institute</td></tr>
+              <tr><td data-label="Email id">example@email.com</td></tr>
+              <tr><td data-label="Field of Research">Quantum Devices, Quantum Materials</td></tr>
+              <tr><td data-label="Website link"><a href="#">Website</a></td></tr>
             </table>
           </div>
         </div>
@@ -185,7 +118,7 @@
   </footer>
 
   <script>
-    function openTab(tabName) {
+    function openTab(event, tabName) {
       // Hide all sections
       document.querySelectorAll('.tab-section').forEach(sec => sec.classList.remove('active'));
       // Remove active class from buttons
