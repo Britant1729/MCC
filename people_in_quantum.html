@@ -24,7 +24,7 @@
       </div>
     </div>
     <a href="events.html">Events</a>
-    <a href="people_in_quantum.html">People in Quantum</a>
+    <a href="people_in_quantum.html" class="active">People in Quantum</a>
     <a href="startups.html">For Startups</a>
     <a href="education.html">Quantum Education</a>
     <a href="contact.html">Contact</a>
@@ -42,7 +42,6 @@
         <button class="tab-btn" onclick="openTab('materials', event)">Quantum Materials & Devices</button>
       </div>
 
-      
       <!-- Sections -->
       <div id="computing" class="tab-section active">
         <div class="profile">
@@ -117,17 +116,19 @@
   <footer>
     <p>&copy; 2025 MCC - Mission Coordination Cell.</p>
   </footer>
+
+  <!-- Tabs Script -->
   <script>
     function openTab(tabName, event) {
+      // Hide all sections
       document.querySelectorAll('.tab-section').forEach(sec => sec.classList.remove('active'));
-    // Remove active class from all buttons
+      // Remove active from all buttons
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    // Show selected section
+      // Show selected section
       document.getElementById(tabName).classList.add('active');
-    // Add active to clicked button
+      // Highlight clicked button
       event.currentTarget.classList.add('active');
     }
   </script>
-
 </body>
 </html>
