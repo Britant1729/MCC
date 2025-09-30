@@ -47,6 +47,81 @@ article {
     border: 1px solid #ddd;
 }
 
+/* ===== Tabs ===== */
+.tab-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+.tab-container button {
+    background-color: #003366;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    cursor: pointer;
+    margin: 0 5px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+.tab-container button.active,
+.tab-container button:hover {
+    background-color: #0055aa;
+}
+
+/* Sections */
+.tab-section {
+    display: none;   /* hide by default */
+}
+.tab-section.active {
+    display: block;  /* only show active */
+}
+
+/* ===== Profile Card ===== */
+.profile {
+    border: 1px solid #333;
+    margin: 20px 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    padding: 15px;
+    background: white;
+    gap: 15px;
+}
+
+.profile img {
+    max-width: 180px;
+    height: auto;
+    border-radius: 8px;
+    margin-right: 20px;
+}
+
+.profile-info {
+    flex: 1;
+    min-width: 200px;
+}
+.profile-info h2 {
+    margin: 0;
+}
+.profile-info p {
+    margin: 5px 0;
+}
+
+/* Table inside profile */
+.profile-info table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+.profile-info td {
+    padding: 8px;
+    border: 1px solid #333;
+    word-wrap: break-word;
+}
+.profile-info td:first-child {
+    font-weight: bold;
+    width: 150px;
+}
+
 /* ===== Footer ===== */
 footer {
     background-color: #003366;
@@ -127,38 +202,6 @@ img {
     display: block;
 }
 
-/* ===== Profile Section ===== */
-.profile {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    margin-bottom: 20px;
-    gap: 15px;
-}
-
-.profile img {
-    max-width: 150px;
-    height: auto;
-    border-radius: 8px;
-}
-
-.profile-info {
-    flex: 1;
-    min-width: 200px;
-}
-
-/* Table inside profile */
-.profile-info table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.profile-info td {
-    padding: 6px;
-    border: 1px solid #ddd;
-    word-wrap: break-word;
-}
-
 /* ===== Responsive Adjustments ===== */
 @media (max-width: 768px) {
     nav a {
@@ -183,7 +226,7 @@ img {
     }
 
     .profile img {
-        margin-bottom: 10px;
+        margin: 0 0 10px 0;
     }
 
     .profile-info {
