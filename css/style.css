@@ -1,66 +1,38 @@
+/* ===== Global Styles ===== */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
 }
+
 header {
     background-color: #003366;
     color: white;
     padding: 20px;
     text-align: center;
 }
+
 nav {
     background-color: #005599;
     padding: 10px;
     text-align: center;
 }
+
 nav a {
     color: white;
     margin: 0 15px;
     text-decoration: none;
     padding: 8px;
 }
+
+/* ===== Main Content ===== */
 main {
     padding: 20px;
     max-width: 800px;
     margin: 0 auto;
     background: white;
-    /* ✅ Adjusted for compact footer with text wrapping */
-    padding-bottom: 60px;
-}
-footer {
-    background-color: #003366;
-    color: white;
-    text-align: center;
-    /* ✅ Keep original compact padding */
-    padding: 2px 5px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    font-size: 0.8em;
-    line-height: 1.2;
-    /* ✅ Ensure footer content doesn't overflow */
-    box-sizing: border-box;
-    /* ✅ Allow text to wrap to multiple lines */
-    white-space: normal;
-    overflow: visible;
-    /* ✅ Set a reasonable max height and allow scrolling if needed */
-    max-height: 50px;
-    overflow-y: auto;
-}
-
-/* ✅ Media query for better mobile handling */
-@media (max-width: 768px) {
-    footer {
-        font-size: 0.7em;
-        padding: 2px 3px;
-        max-height: 60px;
-    }
-    main {
-        /* ✅ Adjust main content padding for mobile */
-        padding-bottom: 70px;
-    }
+    padding-bottom: 60px; /* space for footer */
 }
 
 article {
@@ -68,23 +40,47 @@ article {
     padding: 10px;
     border-bottom: 1px solid #ddd;
 }
+
 .person {
     margin-bottom: 20px;
     padding: 10px;
     border: 1px solid #ddd;
 }
+
+/* ===== Footer ===== */
+footer {
+    background-color: #003366;
+    color: white;
+    text-align: center;
+    padding: 2px 5px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    font-size: 0.8em;
+    line-height: 1.2;
+    box-sizing: border-box;
+    white-space: normal;
+    overflow: visible;
+    max-height: 50px;
+    overflow-y: auto;
+}
+
+/* ===== Forms ===== */
 form {
     margin-top: 20px;
 }
+
 label {
     display: block;
     margin: 10px 0 5px;
 }
+
 input, textarea {
     width: 100%;
     padding: 8px;
     margin-bottom: 10px;
 }
+
 button {
     background-color: #005599;
     color: white;
@@ -92,14 +88,20 @@ button {
     border: none;
     cursor: pointer;
 }
+
+/* ===== Images ===== */
 img {
     max-width: 100%;
+    height: auto;
+    display: block;
 }
-/* ===== Dropdown Menu Styling ===== */
+
+/* ===== Dropdown Menu ===== */
 .dropdown {
     position: relative;
     display: inline-block;
 }
+
 .dropdown-content {
     display: none;
     position: absolute;
@@ -109,15 +111,107 @@ img {
     z-index: 1;
     text-align: left;
 }
+
 .dropdown-content a {
     color: white;
     display: block;
     padding: 10px;
     text-decoration: none;
 }
+
 .dropdown-content a:hover {
     background-color: #003366;
 }
+
 .dropdown:hover .dropdown-content {
     display: block;
+}
+
+/* ===== Profile Section ===== */
+.profile {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    gap: 15px;
+}
+
+.profile img {
+    max-width: 150px;
+    height: auto;
+    border-radius: 8px;
+}
+
+.profile-info {
+    flex: 1;
+    min-width: 200px;
+}
+
+/* Table inside profile */
+.profile-info table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.profile-info td {
+    padding: 6px;
+    border: 1px solid #ddd;
+    word-wrap: break-word;
+}
+
+/* ===== Responsive Adjustments ===== */
+@media (max-width: 768px) {
+    nav a {
+        display: block;
+        margin: 8px 0;
+    }
+
+    footer {
+        font-size: 0.7em;
+        padding: 2px 3px;
+        max-height: 60px;
+    }
+
+    main {
+        padding-bottom: 70px;
+    }
+
+    .profile {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .profile img {
+        margin-bottom: 10px;
+    }
+
+    .profile-info {
+        width: 100%;
+        text-align: left;
+    }
+
+    /* Convert table to stacked view */
+    .profile-info table,
+    .profile-info tbody,
+    .profile-info tr,
+    .profile-info td {
+        display: block;
+        width: 100%;
+    }
+
+    .profile-info tr {
+        margin-bottom: 10px;
+    }
+
+    .profile-info td {
+        border: none;
+        padding: 6px 0;
+    }
+
+    .profile-info td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: block;
+    }
 }
