@@ -117,9 +117,12 @@ article {
     border: 1px solid #333;
     word-wrap: break-word;
 }
-.profile-info td:first-child {
+
+/* Show data-label as content before the cell value */
+.profile-info td::before {
+    content: attr(data-label) ": ";
     font-weight: bold;
-    width: 150px;
+    display: inline;
 }
 
 /* ===== Footer ===== */
@@ -204,37 +207,87 @@ img {
 
 /* ===== Responsive Adjustments ===== */
 @media (max-width: 768px) {
+    /* Navigation - Stack links vertically */
+    nav {
+        padding: 5px;
+    }
+    
     nav a {
         display: block;
-        margin: 8px 0;
+        margin: 5px auto;
+        padding: 10px;
+        max-width: 200px;
+    }
+    
+    /* Dropdown adjustments for mobile */
+    .dropdown-content {
+        position: static;
+        box-shadow: none;
+        min-width: 100%;
     }
 
-    footer {
-        font-size: 0.7em;
-        padding: 2px 3px;
-        max-height: 60px;
+    /* Header - Reduce padding */
+    header {
+        padding: 15px 10px;
+    }
+    
+    header h1 {
+        font-size: 1.5em;
     }
 
+    /* Main content - Reduce padding */
     main {
+        padding: 10px;
         padding-bottom: 70px;
     }
+    
+    main h2 {
+        font-size: 1.3em;
+    }
 
+    /* Tab buttons - Stack or wrap better */
+    .tab-container {
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+    
+    .tab-container button {
+        padding: 10px 15px;
+        font-size: 14px;
+        margin: 2px;
+        flex: 1 1 auto;
+        min-width: 120px;
+    }
+
+    /* Profile card - Stack vertically */
     .profile {
         flex-direction: column;
         align-items: center;
         text-align: center;
+        padding: 10px;
     }
 
     .profile img {
-        margin: 0 0 10px 0;
+        margin: 0 0 15px 0;
+        max-width: 150px;
     }
 
     .profile-info {
         width: 100%;
         text-align: left;
     }
+    
+    .profile-info h2 {
+        font-size: 1.4em;
+        text-align: center;
+    }
+    
+    .profile-info > p {
+        text-align: center;
+        font-size: 0.95em;
+    }
 
-    /* Convert table to stacked view */
+    /* Convert table to stacked view on mobile */
     .profile-info table,
     .profile-info tbody,
     .profile-info tr,
@@ -244,17 +297,49 @@ img {
     }
 
     .profile-info tr {
-        margin-bottom: 10px;
+        margin-bottom: 12px;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 8px;
     }
 
     .profile-info td {
         border: none;
-        padding: 6px 0;
+        padding: 4px 0;
+        word-break: break-word;
     }
 
     .profile-info td::before {
         content: attr(data-label);
         font-weight: bold;
         display: block;
+        color: #003366;
+        margin-bottom: 3px;
+    }
+    
+    .profile-info td a {
+        word-break: break-all;
+    }
+
+    /* Footer adjustments */
+    footer {
+        font-size: 0.7em;
+        padding: 5px;
+        max-height: 60px;
+        position: relative;
+    }
+    
+    footer p {
+        margin: 5px 0;
+    }
+
+    /* Form elements - Better touch targets */
+    input, textarea {
+        font-size: 16px; /* Prevents zoom on iOS */
+        padding: 12px;
+    }
+    
+    button {
+        padding: 12px;
+        font-size: 16px;
     }
 }
