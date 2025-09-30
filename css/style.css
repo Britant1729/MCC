@@ -117,10 +117,12 @@ article {
     border: 1px solid #333;
     word-wrap: break-word;
 }
-.profile-info td:first-child {
+
+/* Show data-label as content before the cell value */
+.profile-info td::before {
+    content: attr(data-label) ": ";
     font-weight: bold;
-    width: 150px;
-    background-color: #f9f9f9;
+    display: inline;
 }
 
 /* ===== Footer ===== */
