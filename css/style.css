@@ -70,10 +70,10 @@ article {
 
 /* Sections */
 .tab-section {
-    display: none;   /* hide by default */
+    display: none;   /* hide all by default */
 }
 .tab-section.active {
-    display: block;  /* only show active */
+    display: block;  /* only active is visible */
 }
 
 /* ===== Profile Card ===== */
