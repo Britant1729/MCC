@@ -124,14 +124,14 @@ article {
 
 /* First column (labels) can be bold */
 .profile-info td:first-child {
-    font-weight: bold;
+    font-weight: normal;
     width: 30%;  /* Adjust as needed */
 }
 
 /* Show data-label as content before the cell value */
 .profile-info td::before {
     content: attr(data-label) ": ";
-    font-weight: normal;
+    font-weight: bold;
     display: inline;
 }
 
