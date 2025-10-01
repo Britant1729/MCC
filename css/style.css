@@ -131,7 +131,7 @@ article {
 /* Show data-label as content before the cell value */
 .profile-info td::before {
     content: attr(data-label) ": ";
-    font-weight: bold;
+    font-weight: normal;
     display: inline;
 }
 
