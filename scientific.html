@@ -15,12 +15,15 @@
     body {
       font-family: Arial, sans-serif;
       background: #f5f5f5;
-      padding: 40px 20px;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px 20px;
     }
 
     .news-section {
-      max-width: 1200px;
-      margin: 0 auto;
       background: #fff;
       padding: 30px;
       border-radius: 10px;
@@ -33,12 +36,13 @@
       align-items: center;
       border-bottom: 2px solid #005599;
       padding-bottom: 15px;
-      margin-bottom: 30px;
+      margin-bottom: 40px;
     }
 
     .news-header h2 {
       color: #005599;
       font-size: 28px;
+      margin: 0;
     }
 
     .news-header a {
@@ -54,7 +58,7 @@
 
     .scroll-container {
       position: relative;
-      padding: 0 60px;
+      padding: 0 70px;
     }
 
     .arrow {
@@ -105,6 +109,7 @@
 
     .news-card {
       min-width: 350px;
+      flex-shrink: 0;
       background: #fafafa;
       border: 1px solid #ddd;
       border-top: 4px solid #ff6600;
@@ -112,6 +117,10 @@
       padding: 25px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      cursor: pointer;
     }
 
     .news-card:hover {
@@ -146,6 +155,14 @@
     }
 
     @media (max-width: 768px) {
+      main {
+        padding: 20px 10px;
+      }
+
+      .news-section {
+        padding: 20px;
+      }
+
       .scroll-container {
         padding: 0 50px;
       }
@@ -163,6 +180,43 @@
       .news-header h2 {
         font-size: 22px;
       }
+
+      .news-header {
+        margin-bottom: 30px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .scroll-container {
+        padding: 0 45px;
+      }
+
+      .arrow {
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+      }
+
+      .news-card {
+        min-width: 250px;
+        padding: 20px;
+      }
+
+      .news-card h3 {
+        font-size: 18px;
+      }
+
+      .news-card p {
+        font-size: 14px;
+      }
+
+      .news-header h2 {
+        font-size: 20px;
+      }
+
+      .news-header a {
+        font-size: 14px;
+      }
     }
   </style>
 </head>
@@ -170,118 +224,146 @@
   <header>
     <h1>Latest News & Updates</h1>
   </header>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <div class="dropdown">
-        <a href="#">What's New ▾</a>
-        <div class="dropdown-content">
-          <a href="news.html">News</a>
-          <a href="scientific.html">Scientific Advancements</a>
-          <a href="reports.html">Reports</a>
-          <a href="miscellaneous.html">Miscellaneous</a>
-        </div>
+  
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <div class="dropdown">
+      <a href="#">What's New ▾</a>
+      <div class="dropdown-content">
+        <a href="news.html">News</a>
+        <a href="scientific.html">Scientific Advancements</a>
+        <a href="reports.html">Reports</a>
+        <a href="miscellaneous.html">Miscellaneous</a>
       </div>
-      <a href="events.html">Events</a>
-      <a href="people_in_quantum.html">People in Quantum</a>
-      <a href="startups.html">For Startups</a>
-      <a href="education.html">Quantum Education</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-  <main>
-  <section>
-    <div class="scroll-container">
-      <button class="arrow arrow-left" onclick="scrollNews(-1)">‹</button>
-      
-      <div class="news-slider">
-        <div class="news-track" id="newsTrack">
-          
-          <div class="news-card">
-            <div class="news-date">October 5, 2025</div>
-            <h3><span class="highlight">Breakthrough</span> in Quantum Computing</h3>
-            <p>
-              Researchers have achieved a major milestone in quantum error correction, 
-              bringing us closer to practical quantum computers. The new technique 
-              reduces error rates by 40% compared to previous methods, paving the way 
-              for more stable quantum operations.
-            </p>
-          </div>
-
-          <div class="news-card">
-            <div class="news-date">October 4, 2025</div>
-            <h3><span class="highlight">AI Model</span> Surpasses Human Performance</h3>
-            <p>
-              A new artificial intelligence system has demonstrated unprecedented 
-              capabilities in medical diagnosis, achieving 95% accuracy in detecting 
-              early-stage diseases. This advancement could revolutionize healthcare 
-              screening and save countless lives through early intervention.
-            </p>
-          </div>
-
-          <div class="news-card">
-            <div class="news-date">October 3, 2025</div>
-            <h3><span class="highlight">Renewable Energy</span> Reaches New Heights</h3>
-            <p>
-              Solar panel efficiency has reached a record-breaking 32% conversion rate 
-              using advanced perovskite materials. This innovation could significantly 
-              reduce the cost of solar energy and accelerate the transition to 
-              sustainable power sources worldwide.
-            </p>
-          </div>
-
-          <div class="news-card">
-            <div class="news-date">October 2, 2025</div>
-            <h3><span class="highlight">Space Exploration</span> Mission Announced</h3>
-            <p>
-              International space agencies have unveiled plans for the first crewed 
-              mission to Mars, scheduled for 2032. The mission will establish a 
-              research base to study the planet's geology and search for signs of 
-              past microbial life.
-            </p>
-          </div>
-
-          <div class="news-card">
-            <div class="news-date">October 1, 2025</div>
-            <h3><span class="highlight">Nanotechnology</span> Advances in Medicine</h3>
-            <p>
-              Scientists have developed targeted nanoparticles that can deliver 
-              chemotherapy directly to cancer cells while sparing healthy tissue. 
-              Clinical trials show promising results with reduced side effects and 
-              improved treatment outcomes for patients.
-            </p>
-          </div>
-
-          <div class="news-card">
-            <div class="news-date">September 30, 2025</div>
-            <h3><span class="highlight">Battery Technology</span> Revolution</h3>
-            <p>
-              A new solid-state battery design offers triple the energy density of 
-              current lithium-ion batteries while charging in just 10 minutes. This 
-              breakthrough could transform electric vehicles and portable electronics 
-              within the next five years.
-            </p>
-          </div>
-
-        </div>
-      </div>
-
-      <button class="arrow arrow-right" onclick="scrollNews(1)">›</button>
     </div>
-  </section>
-</main>
+    <a href="events.html">Events</a>
+    <a href="people_in_quantum.html">People in Quantum</a>
+    <a href="startups.html">For Startups</a>
+    <a href="education.html">Quantum Education</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <main>
+    <section class="news-section">
+      <div class="news-header">
+        <h2>Latest News & Updates</h2>
+        <a href="all-news.html">View all</a>
+      </div>
+
+      <div class="scroll-container">
+        <button class="arrow arrow-left" onclick="scrollNews(-1)">‹</button>
+        
+        <div class="news-slider">
+          <div class="news-track" id="newsTrack">
+            
+            <a href="news-quantum-computing.html" class="news-card">
+              <div class="news-date">October 5, 2025</div>
+              <h3>
+                <span class="highlight">Breakthrough</span> in Quantum Computing
+              </h3>
+              <p>
+                Researchers have achieved a major milestone in quantum error correction, 
+                bringing us closer to practical quantum computers. The new technique 
+                reduces error rates by 40% compared to previous methods, paving the way 
+                for more stable quantum operations.
+              </p>
+            </a>
+
+            <a href="news-ai-medical-diagnosis.html" class="news-card">
+              <div class="news-date">October 4, 2025</div>
+              <h3>
+                <span class="highlight">AI Model</span> Surpasses Human Performance
+              </h3>
+              <p>
+                A new artificial intelligence system has demonstrated unprecedented 
+                capabilities in medical diagnosis, achieving 95% accuracy in detecting 
+                early-stage diseases. This advancement could revolutionize healthcare 
+                screening and save countless lives through early intervention.
+              </p>
+            </a>
+
+            <a href="news-renewable-energy.html" class="news-card">
+              <div class="news-date">October 3, 2025</div>
+              <h3>
+                <span class="highlight">Renewable Energy</span> Reaches New Heights
+              </h3>
+              <p>
+                Solar panel efficiency has reached a record-breaking 32% conversion rate 
+                using advanced perovskite materials. This innovation could significantly 
+                reduce the cost of solar energy and accelerate the transition to 
+                sustainable power sources worldwide.
+              </p>
+            </a>
+
+            <a href="news-mars-mission.html" class="news-card">
+              <div class="news-date">October 2, 2025</div>
+              <h3>
+                <span class="highlight">Space Exploration</span> Mission Announced
+              </h3>
+              <p>
+                International space agencies have unveiled plans for the first crewed 
+                mission to Mars, scheduled for 2032. The mission will establish a 
+                research base to study the planet's geology and search for signs of 
+                past microbial life.
+              </p>
+            </a>
+
+            <a href="news-nanotechnology-cancer.html" class="news-card">
+              <div class="news-date">October 1, 2025</div>
+              <h3>
+                <span class="highlight">Nanotechnology</span> Advances in Medicine
+              </h3>
+              <p>
+                Scientists have developed targeted nanoparticles that can deliver 
+                chemotherapy directly to cancer cells while sparing healthy tissue. 
+                Clinical trials show promising results with reduced side effects and 
+                improved treatment outcomes for patients.
+              </p>
+            </a>
+
+            <a href="news-battery-technology.html" class="news-card">
+              <div class="news-date">September 30, 2025</div>
+              <h3>
+                <span class="highlight">Battery Technology</span> Revolution
+              </h3>
+              <p>
+                A new solid-state battery design offers triple the energy density of 
+                current lithium-ion batteries while charging in just 10 minutes. This 
+                breakthrough could transform electric vehicles and portable electronics 
+                within the next five years.
+              </p>
+            </a>
+
+          </div>
+        </div>
+
+        <button class="arrow arrow-right" onclick="scrollNews(1)">›</button>
+      </div>
+    </section>
+  </main>
 
   <footer>
     <p>&copy; 2025 MCC - Mission Coordination Cell.</p>
   </footer>
+
   <script>
     let currentPosition = 0;
     const track = document.getElementById('newsTrack');
     const cards = document.querySelectorAll('.news-card');
     const cardWidth = 370; // 350px width + 20px gap
-    const maxScroll = -(cardWidth * (cards.length - 3));
+    
+    function calculateMaxScroll() {
+      const containerWidth = document.querySelector('.news-slider').offsetWidth;
+      const totalWidth = cardWidth * cards.length;
+      return Math.min(0, containerWidth - totalWidth);
+    }
+    
+    let maxScroll = calculateMaxScroll();
 
     function scrollNews(direction) {
       currentPosition -= direction * cardWidth;
+      maxScroll = calculateMaxScroll();
       
       // Boundary checks
       if (currentPosition > 0) {
@@ -297,9 +379,9 @@
     // Adjust for responsive design
     window.addEventListener('resize', function() {
       currentPosition = 0;
+      maxScroll = calculateMaxScroll();
       track.style.transform = `translateX(0px)`;
     });
   </script>
 </body>
 </html>
-
