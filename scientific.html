@@ -5,7 +5,108 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MCC | Scientific Advancements</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Additional Styles for Thin Film Section */
+    main {
+      max-width: 1200px;
+    }
+
+    .thinfilm-section {
+      margin-top: 30px;
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+
+    .thinfilm-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #005599;
+      padding-bottom: 10px;
+      margin-bottom: 25px;
+    }
+
+    .thinfilm-header h2 {
+      color: #005599;
+      margin: 0;
+    }
+
+    .thinfilm-header a {
+      text-decoration: none;
+      color: #ff6600;
+      font-weight: bold;
+    }
+
+    .thinfilm-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .thinfilm-card {
+      background: #fafafa;
+      border: 1px solid #ddd;
+      border-top: 4px solid #ff6600;
+      border-radius: 10px;
+      width: 31%;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .thinfilm-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .thinfilm-card h3 {
+      color: #003366;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .thinfilm-card h3 span {
+      color: #ff6600;
+      font-weight: bold;
+    }
+
+    .thinfilm-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+
+    .thinfilm-card p {
+      color: #333;
+      font-size: 14px;
+      line-height: 1.6;
+      text-align: justify;
+    }
+
+    @media (max-width: 992px) {
+      .thinfilm-card {
+        width: 48%;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .thinfilm-card {
+        width: 100%;
+      }
+
+      .thinfilm-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
 </head>
+
 <body>
   <header>
     <h1>Scientific Advancements</h1>
@@ -31,9 +132,39 @@
   </nav>
 
   <main>
-    <section>
-      <h2>Recent Developments</h2>
-      <p>[Content goes here]</p>
+    <section class="thinfilm-section">
+      <div class="thinfilm-header">
+        <h2>Chemical Depositions of Thin Films</h2>
+        <a href="#">View all</a>
+      </div>
+
+      <div class="thinfilm-container">
+
+        <div class="thinfilm-card">
+          <h3><span>ALD</span> ATOMIC LAYER DEPOSITION</h3>
+          <img src="https://www.fz-juelich.de/de/ibm/ibm-2/chemische-ablagerung-duenner-schichten/ald.png" alt="ALD Deposition">
+          <p>
+            ALD is an advanced thin film manufacturing process for mainstream applications expanding beyond semiconductor processing. It achieves new levels of performance in Li-ion batteries, fuel cells, and memory devices.
+          </p>
+        </div>
+
+        <div class="thinfilm-card">
+          <h3><span>CSD</span> CHEMICAL SOLUTION DEPOSITION</h3>
+          <img src="https://www.fz-juelich.de/de/ibm/ibm-2/chemische-ablagerung-duenner-schichten/csd.png" alt="CSD Deposition">
+          <p>
+            CSD is a growth technique for thin films, self-assembled nanomaterials, or nanocomposite thin films where chemical solution is deposited and transformed into solid compounds.
+          </p>
+        </div>
+
+        <div class="thinfilm-card">
+          <h3><span>CVD</span> CHEMICAL VAPOUR DEPOSITION</h3>
+          <img src="https://www.fz-juelich.de/de/ibm/ibm-2/chemische-ablagerung-duenner-schichten/cvd.png" alt="CVD Deposition">
+          <p>
+            CVD is a chemical process used to produce high-quality, high-performance materials. Volatile precursors react and decompose on the substrate surface to create the desired thin film.
+          </p>
+        </div>
+
+      </div>
     </section>
   </main>
 
