@@ -56,9 +56,28 @@
       text-decoration: underline;
     }
 
+    .search-container {
+      margin-bottom: 20px;
+    }
+
+    .search-container input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      outline: none;
+    }
+
+    .search-container input:focus {
+      border-color: #005599;
+      box-shadow: 0 0 5px rgba(0, 85, 153, 0.3);
+    }
+
     .scroll-container {
       position: relative;
       padding: 0 60px;
+      touch-action: pan-y; /* Prevents vertical scroll interference */
     }
 
     .arrow {
@@ -120,6 +139,10 @@
       color: inherit;
       display: block;
       cursor: pointer;
+    }
+
+    .news-card.hidden {
+      display: none;
     }
 
     .news-card:hover {
@@ -250,12 +273,16 @@
         <a href="all-news.html">View all</a>
       </div>
 
+      <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search news by topic (e.g., Quantum, AI, Energy)">
+      </div>
+
       <div class="scroll-container">
         <button class="arrow arrow-left" onclick="scrollNews(-1)">‹</button>
 
         <div class="news-slider">
           <div class="news-track" id="newsTrack">
-            <a href="news-quantum-computing.html" class="news-card">
+            <a href="news-quantum-computing.html" class="news-card" data-tags="quantum,computing,technology">
               <div class="news-date">October 5, 2025</div>
               <h3>
                 <span class="highlight">Breakthrough</span> in Quantum Computing
@@ -268,7 +295,7 @@
               </p>
             </a>
 
-            <a href="news-ai-medical-diagnosis.html" class="news-card">
+            <a href="news-ai-medical-diagnosis.html" class="news-card" data-tags="ai,medical,healthcare">
               <div class="news-date">October 4, 2025</div>
               <h3>
                 <span class="highlight">AI Model</span> Surpasses Human Performance
@@ -281,7 +308,7 @@
               </p>
             </a>
 
-            <a href="news-renewable-energy.html" class="news-card">
+            <a href="news-renewable-energy.html" class="news-card" data-tags="energy,solar,renewable">
               <div class="news-date">October 3, 2025</div>
               <h3>
                 <span class="highlight">Renewable Energy</span> Reaches New Heights
@@ -294,7 +321,7 @@
               </p>
             </a>
 
-            <a href="news-mars-mission.html" class="news-card">
+            <a href="news-mars-mission.html" class="news-card" data-tags="space,mars,exploration">
               <div class="news-date">October 2, 2025</div>
               <h3>
                 <span class="highlight">Space Exploration</span> Mission Announced
@@ -307,7 +334,7 @@
               </p>
             </a>
 
-            <a href="news-nanotechnology-cancer.html" class="news-card">
+            <a href="news-nanotechnology-cancer.html" class="news-card" data-tags="nanotechnology,medicine,cancer">
               <div class="news-date">October 1, 2025</div>
               <h3>
                 <span class="highlight">Nanotechnology</span> Advances in Medicine
@@ -320,7 +347,7 @@
               </p>
             </a>
 
-            <a href="news-battery-technology.html" class="news-card">
+            <a href="news-battery-technology.html" class="news-card" data-tags="battery,technology,energy">
               <div class="news-date">September 30, 2025</div>
               <h3>
                 <span class="highlight">Battery Technology</span> Revolution
@@ -349,16 +376,21 @@
     const track = document.getElementById('newsTrack');
     const cards = document.querySelectorAll('.news-card');
     const cardWidth = 315; // 300px width + 15px gap
-    const visibleCards = () => Math.floor(document.querySelector('.news-slider').offsetWidth / cardWidth);
+    const slider = document.querySelector('.news-slider');
+    const searchInput = document.getElementById('searchInput');
 
+    // Calculate visible cards and max scroll
+    const visibleCards = () => Math.floor(slider.offsetWidth / cardWidth);
     function calculateMaxScroll() {
-      const containerWidth = document.querySelector('.news-slider').offsetWidth;
-      const totalWidth = cardWidth * cards.length;
+      const containerWidth = slider.offsetWidth;
+      const visibleCardCount = Array.from(cards).filter(card => !card.classList.contains('hidden')).length;
+      const totalWidth = cardWidth * visibleCardCount;
       return Math.min(0, containerWidth - totalWidth);
     }
 
     let maxScroll = calculateMaxScroll();
 
+    // Scroll function for arrow buttons
     function scrollNews(direction) {
       const cardsToScroll = Math.max(1, Math.floor(visibleCards() / 2));
       currentPosition -= direction * cardWidth * cardsToScroll;
@@ -374,6 +406,52 @@
       track.style.transform = `translateX(${currentPosition}px)`;
     }
 
+    // Search functionality
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.toLowerCase().trim();
+      cards.forEach(card => {
+        const tags = card.getAttribute('data-tags').toLowerCase();
+        if (query === '' || tags.includes(query)) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+      currentPosition = 0; // Reset scroll position
+      maxScroll = calculateMaxScroll();
+      track.style.transform = `translateX(0px)`;
+    });
+
+    // Touch swipe functionality
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let isDragging = false;
+
+    slider.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+      isDragging = true;
+    });
+
+    slider.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      touchEndX = e.changedTouches[0].screenX;
+      const deltaX = touchEndX - touchStartX;
+      track.style.transform = `translateX(${currentPosition + deltaX}px)`;
+    });
+
+    slider.addEventListener('touchend', () => {
+      if (!isDragging) return;
+      isDragging = false;
+      const deltaX = touchEndX - touchStartX;
+      const threshold = cardWidth / 3; // Swipe threshold for scrolling
+      if (Math.abs(deltaX) > threshold) {
+        scrollNews(deltaX > 0 ? -1 : 1);
+      } else {
+        track.style.transform = `translateX(${currentPosition}px)`;
+      }
+    });
+
+    // Handle window resize
     window.addEventListener('resize', () => {
       currentPosition = 0;
       maxScroll = calculateMaxScroll();
