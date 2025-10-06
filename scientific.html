@@ -58,7 +58,7 @@
 
     .scroll-container {
       position: relative;
-      padding: 0 70px;
+      padding: 0 60px;
     }
 
     .arrow {
@@ -103,18 +103,17 @@
 
     .news-track {
       display: flex;
-      gap: 20px;
+      gap: 15px;
       transition: transform 0.5s ease;
     }
 
     .news-card {
-      min-width: 350px;
-      flex-shrink: 0;
+      flex: 0 0 300px;
       background: #fafafa;
       border: 1px solid #ddd;
       border-top: 4px solid #ff6600;
       border-radius: 10px;
-      padding: 25px;
+      padding: 20px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       text-decoration: none;
@@ -130,8 +129,8 @@
 
     .news-card h3 {
       color: #003366;
-      font-size: 20px;
-      margin-bottom: 15px;
+      font-size: 18px;
+      margin-bottom: 12px;
       line-height: 1.4;
     }
 
@@ -142,15 +141,15 @@
 
     .news-card p {
       color: #555;
-      font-size: 15px;
-      line-height: 1.7;
+      font-size: 14px;
+      line-height: 1.6;
       text-align: justify;
     }
 
     .news-date {
       color: #999;
-      font-size: 13px;
-      margin-bottom: 10px;
+      font-size: 12px;
+      margin-bottom: 8px;
       font-style: italic;
     }
 
@@ -174,7 +173,7 @@
       }
 
       .news-card {
-        min-width: 280px;
+        flex: 0 0 250px;
       }
 
       .news-header h2 {
@@ -188,7 +187,7 @@
 
     @media (max-width: 480px) {
       .scroll-container {
-        padding: 0 45px;
+        padding: 0 40px;
       }
 
       .arrow {
@@ -198,16 +197,16 @@
       }
 
       .news-card {
-        min-width: 250px;
-        padding: 20px;
+        flex: 0 0 220px;
+        padding: 15px;
       }
 
       .news-card h3 {
-        font-size: 18px;
+        font-size: 16px;
       }
 
       .news-card p {
-        font-size: 14px;
+        font-size: 13px;
       }
 
       .news-header h2 {
@@ -224,7 +223,7 @@
   <header>
     <h1>Latest News & Updates</h1>
   </header>
-  
+
   <nav>
     <a href="index.html">Home</a>
     <a href="about.html">About</a>
@@ -253,19 +252,18 @@
 
       <div class="scroll-container">
         <button class="arrow arrow-left" onclick="scrollNews(-1)">‹</button>
-        
+
         <div class="news-slider">
           <div class="news-track" id="newsTrack">
-            
             <a href="news-quantum-computing.html" class="news-card">
               <div class="news-date">October 5, 2025</div>
               <h3>
                 <span class="highlight">Breakthrough</span> in Quantum Computing
               </h3>
               <p>
-                Researchers have achieved a major milestone in quantum error correction, 
-                bringing us closer to practical quantum computers. The new technique 
-                reduces error rates by 40% compared to previous methods, paving the way 
+                Researchers have achieved a major milestone in quantum error correction,
+                bringing us closer to practical quantum computers. The new technique
+                reduces error rates by 40% compared to previous methods, paving the way
                 for more stable quantum operations.
               </p>
             </a>
@@ -276,9 +274,9 @@
                 <span class="highlight">AI Model</span> Surpasses Human Performance
               </h3>
               <p>
-                A new artificial intelligence system has demonstrated unprecedented 
-                capabilities in medical diagnosis, achieving 95% accuracy in detecting 
-                early-stage diseases. This advancement could revolutionize healthcare 
+                A new artificial intelligence system has demonstrated unprecedented
+                capabilities in medical diagnosis, achieving 95% accuracy in detecting
+                early-stage diseases. This advancement could revolutionize healthcare
                 screening and save countless lives through early intervention.
               </p>
             </a>
@@ -289,9 +287,9 @@
                 <span class="highlight">Renewable Energy</span> Reaches New Heights
               </h3>
               <p>
-                Solar panel efficiency has reached a record-breaking 32% conversion rate 
-                using advanced perovskite materials. This innovation could significantly 
-                reduce the cost of solar energy and accelerate the transition to 
+                Solar panel efficiency has reached a record-breaking 32% conversion rate
+                using advanced perovskite materials. This innovation could significantly
+                reduce the cost of solar energy and accelerate the transition to
                 sustainable power sources worldwide.
               </p>
             </a>
@@ -302,9 +300,9 @@
                 <span class="highlight">Space Exploration</span> Mission Announced
               </h3>
               <p>
-                International space agencies have unveiled plans for the first crewed 
-                mission to Mars, scheduled for 2032. The mission will establish a 
-                research base to study the planet's geology and search for signs of 
+                International space agencies have unveiled plans for the first crewed
+                mission to Mars, scheduled for 2032. The mission will establish a
+                research base to study the planet's geology and search for signs of
                 past microbial life.
               </p>
             </a>
@@ -315,9 +313,9 @@
                 <span class="highlight">Nanotechnology</span> Advances in Medicine
               </h3>
               <p>
-                Scientists have developed targeted nanoparticles that can deliver 
-                chemotherapy directly to cancer cells while sparing healthy tissue. 
-                Clinical trials show promising results with reduced side effects and 
+                Scientists have developed targeted nanoparticles that can deliver
+                chemotherapy directly to cancer cells while sparing healthy tissue.
+                Clinical trials show promising results with reduced side effects and
                 improved treatment outcomes for patients.
               </p>
             </a>
@@ -328,13 +326,12 @@
                 <span class="highlight">Battery Technology</span> Revolution
               </h3>
               <p>
-                A new solid-state battery design offers triple the energy density of 
-                current lithium-ion batteries while charging in just 10 minutes. This 
-                breakthrough could transform electric vehicles and portable electronics 
+                A new solid-state battery design offers triple the energy density of
+                current lithium-ion batteries while charging in just 10 minutes. This
+                breakthrough could transform electric vehicles and portable electronics
                 within the next five years.
               </p>
             </a>
-
           </div>
         </div>
 
@@ -351,33 +348,33 @@
     let currentPosition = 0;
     const track = document.getElementById('newsTrack');
     const cards = document.querySelectorAll('.news-card');
-    const cardWidth = 370; // 350px width + 20px gap
-    
+    const cardWidth = 315; // 300px width + 15px gap
+    const visibleCards = () => Math.floor(document.querySelector('.news-slider').offsetWidth / cardWidth);
+
     function calculateMaxScroll() {
       const containerWidth = document.querySelector('.news-slider').offsetWidth;
       const totalWidth = cardWidth * cards.length;
       return Math.min(0, containerWidth - totalWidth);
     }
-    
+
     let maxScroll = calculateMaxScroll();
 
     function scrollNews(direction) {
-      currentPosition -= direction * cardWidth;
+      const cardsToScroll = Math.max(1, Math.floor(visibleCards() / 2));
+      currentPosition -= direction * cardWidth * cardsToScroll;
       maxScroll = calculateMaxScroll();
-      
-      // Boundary checks
+
       if (currentPosition > 0) {
         currentPosition = 0;
       }
       if (currentPosition < maxScroll) {
         currentPosition = maxScroll;
       }
-      
+
       track.style.transform = `translateX(${currentPosition}px)`;
     }
 
-    // Adjust for responsive design
-    window.addEventListener('resize', function() {
+    window.addEventListener('resize', () => {
       currentPosition = 0;
       maxScroll = calculateMaxScroll();
       track.style.transform = `translateX(0px)`;
