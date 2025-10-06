@@ -188,7 +188,8 @@
       <a href="education.html">Quantum Education</a>
       <a href="contact.html">Contact</a>
     </nav>
-
+  <main>
+  <section>
     <div class="scroll-container">
       <button class="arrow arrow-left" onclick="scrollNews(-1)">‹</button>
       
@@ -266,8 +267,12 @@
 
       <button class="arrow arrow-right" onclick="scrollNews(1)">›</button>
     </div>
-  </div>
+  </section>
+</main>
 
+  <footer>
+    <p>&copy; 2025 MCC - Mission Coordination Cell.</p>
+  </footer>
   <script>
     let currentPosition = 0;
     const track = document.getElementById('newsTrack');
@@ -295,9 +300,6 @@
       track.style.transform = `translateX(0px)`;
     });
   </script>
-  <footer>
-    <p>&copy; 2025 MCC - Mission Coordination Cell.</p>
-  </footer>
 </body>
 </html>
 
