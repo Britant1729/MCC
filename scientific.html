@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/style.css">
-  <title>What's New</title>
+  <title>News and Patents Section with Horizontal Scroll</title>
   <style>
     * {
       margin: 0;
@@ -23,14 +23,15 @@
       padding: 30px 20px;
     }
 
-    .news-section {
+    .news-section, .patents-section {
       background: #fff;
       padding: 30px;
       border-radius: 10px;
       box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      margin-bottom: 40px;
     }
 
-    .news-header {
+    .news-header, .patents-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -39,20 +40,20 @@
       margin-bottom: 40px;
     }
 
-    .news-header h2 {
+    .news-header h2, .patents-header h2 {
       color: #005599;
       font-size: 28px;
       margin: 0;
     }
 
-    .news-header a {
+    .news-header a, .patents-header a {
       text-decoration: none;
       color: #ff6600;
       font-weight: bold;
       font-size: 16px;
     }
 
-    .news-header a:hover {
+    .news-header a:hover, .patents-header a:hover {
       text-decoration: underline;
     }
 
@@ -77,7 +78,7 @@
     .scroll-container {
       position: relative;
       padding: 0 60px;
-      touch-action: pan-y; /* Prevents vertical scroll interference */
+      touch-action: pan-y;
     }
 
     .arrow {
@@ -115,18 +116,18 @@
       right: 0;
     }
 
-    .news-slider {
+    .news-slider, .patents-slider {
       overflow: hidden;
       position: relative;
     }
 
-    .news-track {
+    .news-track, .patents-track {
       display: flex;
       gap: 15px;
       transition: transform 0.5s ease;
     }
 
-    .news-card {
+    .news-card, .patents-card {
       flex: 0 0 300px;
       background: #fafafa;
       border: 1px solid #ddd;
@@ -141,35 +142,35 @@
       cursor: pointer;
     }
 
-    .news-card.hidden {
+    .news-card.hidden, .patents-card.hidden {
       display: none;
     }
 
-    .news-card:hover {
+    .news-card:hover, .patents-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
 
-    .news-card h3 {
+    .news-card h3, .patents-card h3 {
       color: #003366;
       font-size: 18px;
       margin-bottom: 12px;
       line-height: 1.4;
     }
 
-    .news-card h3 .highlight {
+    .news-card h3 .highlight, .patents-card h3 .highlight {
       color: #ff6600;
       font-weight: bold;
     }
 
-    .news-card p {
+    .news-card p, .patents-card p {
       color: #555;
       font-size: 14px;
       line-height: 1.6;
       text-align: justify;
     }
 
-    .news-date {
+    .news-date, .patents-date {
       color: #999;
       font-size: 12px;
       margin-bottom: 8px;
@@ -181,7 +182,7 @@
         padding: 20px 10px;
       }
 
-      .news-section {
+      .news-section, .patents-section {
         padding: 20px;
       }
 
@@ -195,15 +196,15 @@
         font-size: 20px;
       }
 
-      .news-card {
+      .news-card, .patents-card {
         flex: 0 0 250px;
       }
 
-      .news-header h2 {
+      .news-header h2, .patents-header h2 {
         font-size: 22px;
       }
 
-      .news-header {
+      .news-header, .patents-header {
         margin-bottom: 30px;
       }
     }
@@ -219,24 +220,24 @@
         font-size: 18px;
       }
 
-      .news-card {
+      .news-card, .patents-card {
         flex: 0 0 220px;
         padding: 15px;
       }
 
-      .news-card h3 {
+      .news-card h3, .patents-card h3 {
         font-size: 16px;
       }
 
-      .news-card p {
+      .news-card p, .patents-card p {
         font-size: 13px;
       }
 
-      .news-header h2 {
+      .news-header h2, .patents-header h2 {
         font-size: 20px;
       }
 
-      .news-header a {
+      .news-header a, .patents-header a {
         font-size: 14px;
       }
     }
@@ -244,7 +245,7 @@
 </head>
 <body>
   <header>
-    <h1>Latest News & Updates</h1>
+    <h1>Latest News & Patents</h1>
   </header>
 
   <nav>
@@ -267,18 +268,19 @@
   </nav>
 
   <main>
+    <!-- News Section -->
     <section class="news-section">
       <div class="news-header">
         <h2>Latest News & Updates</h2>
-        <a href="view_all.html">View all</a>
+        <a href="all-news.html">View all</a>
       </div>
 
       <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search news (e.g., quantum+ai for combined results, or quantum,ai for intersection search)">
+        <input type="text" id="newsSearchInput" placeholder="Search news (e.g., quantum+ai, quantum,ai)">
       </div>
 
       <div class="scroll-container">
-        <button class="arrow arrow-left" onclick="scrollNews(-1)">‹</button>
+        <button class="arrow arrow-left" onclick="scrollNews(-1, 'newsTrack')">‹</button>
 
         <div class="news-slider">
           <div class="news-track" id="newsTrack">
@@ -292,15 +294,6 @@
                 bringing us closer to practical quantum computers. The new technique
                 reduces error rates by 40% compared to previous methods, paving the way
                 for more stable quantum operations.
-              </p>
-            </a>
-            <a href="link.html" class="news-card" data-tags="quantum,computing,technology">
-              <div class="news-date">date</div>
-              <h3>
-                <span class="highlight">text</span> text
-              </h3>
-              <p>
-                 text
               </p>
             </a>
 
@@ -371,7 +364,107 @@
           </div>
         </div>
 
-        <button class="arrow arrow-right" onclick="scrollNews(1)">›</button>
+        <button class="arrow arrow-right" onclick="scrollNews(1, 'newsTrack')">›</button>
+      </div>
+    </section>
+
+    <!-- Patents Section -->
+    <section class="patents-section">
+      <div class="patents-header">
+        <h2>Latest Patents</h2>
+        <a href="all-patents.html">View all</a>
+      </div>
+
+      <div class="search-container">
+        <input type="text" id="patentsSearchInput" placeholder="Search patents (e.g., quantum+ai, quantum,ai)">
+      </div>
+
+      <div class="scroll-container">
+        <button class="arrow arrow-left" onclick="scrollNews(-1, 'patentsTrack')">‹</button>
+
+        <div class="patents-slider">
+          <div class="patents-track" id="patentsTrack">
+            <a href="patent-quantum-computing.html" class="patents-card" data-tags="quantum,computing,technology">
+              <div class="patents-date">October 5, 2025</div>
+              <h3>
+                <span class="highlight">Breakthrough</span> in Quantum Computing
+              </h3>
+              <p>
+                Researchers have achieved a major milestone in quantum error correction,
+                bringing us closer to practical quantum computers. The new technique
+                reduces error rates by 40% compared to previous methods, paving the way
+                for more stable quantum operations.
+              </p>
+            </a>
+
+            <a href="patent-ai-medical-diagnosis.html" class="patents-card" data-tags="ai,medical,healthcare">
+              <div class="patents-date">October 4, 2025</div>
+              <h3>
+                <span class="highlight">AI Model</span> Surpasses Human Performance
+              </h3>
+              <p>
+                A new artificial intelligence system has demonstrated unprecedented
+                capabilities in medical diagnosis, achieving 95% accuracy in detecting
+                early-stage diseases. This advancement could revolutionize healthcare
+                screening and save countless lives through early intervention.
+              </p>
+            </a>
+
+            <a href="patent-renewable-energy.html" class="patents-card" data-tags="energy,solar,renewable">
+              <div class="patents-date">October 3, 2025</div>
+              <h3>
+                <span class="highlight">Renewable Energy</span> Reaches New Heights
+              </h3>
+              <p>
+                Solar panel efficiency has reached a record-breaking 32% conversion rate
+                using advanced perovskite materials. This innovation could significantly
+                reduce the cost of solar energy and accelerate the transition to
+                sustainable power sources worldwide.
+              </p>
+            </a>
+
+            <a href="patent-mars-mission.html" class="patents-card" data-tags="space,mars,exploration">
+              <div class="patents-date">October 2, 2025</div>
+              <h3>
+                <span class="highlight">Space Exploration</span> Mission Announced
+              </h3>
+              <p>
+                International space agencies have unveiled plans for the first crewed
+                mission to Mars, scheduled for 2032. The mission will establish a
+                research base to study the planet's geology and search for signs of
+                past microbial life.
+              </p>
+            </a>
+
+            <a href="patent-nanotechnology-cancer.html" class="patents-card" data-tags="nanotechnology,medicine,cancer">
+              <div class="patents-date">October 1, 2025</div>
+              <h3>
+                <span class="highlight">Nanotechnology</span> Advances in Medicine
+              </h3>
+              <p>
+                Scientists have developed targeted nanoparticles that can deliver
+                chemotherapy directly to cancer cells while sparing healthy tissue.
+                Clinical trials show promising results with reduced side effects and
+                improved treatment outcomes for patients.
+              </p>
+            </a>
+
+            <a href="patent-battery-technology.html" class="patents-card" data-tags="battery,technology,energy">
+              <div class="patents-date">September 30, 2025</div>
+              <h3>
+                <span class="highlight">Battery Technology</span> Revolution
+              </h3>
+              <p>
+                A new solid-state battery design offers triple the energy density of
+                current lithium-ion batteries while charging in just 10 minutes. This
+                breakthrough could transform electric vehicles and portable electronics
+                within the next five years.
+              </p>
+            </a>
+          </div>
+        </div>
+
+        <button class="arrow arrow-right" onclick="scrollNews(1, 'patentsTrack')">›</button>
       </div>
     </section>
   </main>
@@ -381,116 +474,142 @@
   </footer>
 
   <script>
-    let currentPosition = 0;
-    const track = document.getElementById('newsTrack');
-    const cards = document.querySelectorAll('.news-card');
-    const cardWidth = 315; // 300px width + 15px gap
-    const slider = document.querySelector('.news-slider');
-    const searchInput = document.getElementById('searchInput');
+    function setupSlider(trackId, searchInputId) {
+      let currentPosition = 0;
+      const track = document.getElementById(trackId);
+      const cards = track.querySelectorAll(`.${trackId.includes('news') ? 'news-card' : 'patents-card'}`);
+      const cardWidth = 315; // 300px width + 15px gap
+      const slider = track.parentElement;
+      const searchInput = document.getElementById(searchInputId);
 
-    // Calculate visible cards and max scroll
-    const visibleCards = () => Math.floor(slider.offsetWidth / cardWidth);
-    function calculateMaxScroll() {
-      const containerWidth = slider.offsetWidth;
-      const visibleCardCount = Array.from(cards).filter(card => !card.classList.contains('hidden')).length;
-      const totalWidth = cardWidth * visibleCardCount;
-      return Math.min(0, containerWidth - totalWidth);
-    }
-
-    let maxScroll = calculateMaxScroll();
-
-    // Scroll function for arrow buttons
-    function scrollNews(direction) {
-      const cardsToScroll = Math.max(1, Math.floor(visibleCards() / 2));
-      currentPosition -= direction * cardWidth * cardsToScroll;
-      maxScroll = calculateMaxScroll();
-
-      if (currentPosition > 0) {
-        currentPosition = 0;
-      }
-      if (currentPosition < maxScroll) {
-        currentPosition = maxScroll;
+      const visibleCards = () => Math.floor(slider.offsetWidth / cardWidth);
+      function calculateMaxScroll() {
+        const containerWidth = slider.offsetWidth;
+        const visibleCardCount = Array.from(cards).filter(card => !card.classList.contains('hidden')).length;
+        const totalWidth = cardWidth * visibleCardCount;
+        return Math.min(0, containerWidth - totalWidth);
       }
 
-      track.style.transform = `translateX(${currentPosition}px)`;
-    }
+      let maxScroll = calculateMaxScroll();
 
-    // Search functionality with union (+) and intersection (,)
-    searchInput.addEventListener('input', () => {
-      const query = searchInput.value.toLowerCase().trim();
-      let queries = [];
+      window.scrollNews = function(direction, trackId) {
+        const track = document.getElementById(trackId);
+        let currentPosition = trackId === 'newsTrack' ? window.newsCurrentPosition : window.patentsCurrentPosition;
+        let maxScroll = trackId === 'newsTrack' ? window.newsMaxScroll : window.patentsMaxScroll;
+        const cards = track.querySelectorAll(`.${trackId.includes('news') ? 'news-card' : 'patents-card'}`);
+        const slider = track.parentElement;
 
-      // Handle union and intersection
-      if (query.includes('+')) {
-        queries = query.split('+').map(q => q.trim());
-      } else if (query.includes(',')) {
-        queries = query.split(',').map(q => q.trim());
-      } else {
-        queries = [query];
-      }
+        const cardsToScroll = Math.max(1, Math.floor(Math.floor(slider.offsetWidth / cardWidth) / 2));
+        currentPosition -= direction * cardWidth * cardsToScroll;
+        maxScroll = calculateMaxScroll();
 
-      cards.forEach(card => {
-        const tags = card.getAttribute('data-tags').toLowerCase().split(',');
-
-        let shouldShow = false;
-        if (query === '') {
-          shouldShow = true; // Show all if query is empty
-        } else if (query.includes('+')) {
-          // Union: show if any tag matches any query
-          shouldShow = queries.some(q => tags.some(tag => tag.includes(q)));
-        } else {
-          // Intersection: show if all queries match tags
-          shouldShow = queries.every(q => tags.some(tag => tag.includes(q)));
+        if (currentPosition > 0) {
+          currentPosition = 0;
+        }
+        if (currentPosition < maxScroll) {
+          currentPosition = maxScroll;
         }
 
-        if (shouldShow) {
-          card.classList.remove('hidden');
+        track.style.transform = `translateX(${currentPosition}px)`;
+        if (trackId === 'newsTrack') {
+          window.newsCurrentPosition = currentPosition;
+          window.newsMaxScroll = maxScroll;
         } else {
-          card.classList.add('hidden');
+          window.patentsCurrentPosition = currentPosition;
+          window.patentsMaxScroll = maxScroll;
+        }
+      };
+
+      searchInput.addEventListener('input', () => {
+        const query = searchInput.value.toLowerCase().trim();
+        let queries = [];
+        if (query.includes('+')) {
+          queries = query.split('+').map(q => q.trim());
+        } else if (query.includes(',')) {
+          queries = query.split(',').map(q => q.trim());
+        } else {
+          queries = [query];
+        }
+
+        cards.forEach(card => {
+          const tags = card.getAttribute('data-tags').toLowerCase().split(',');
+          let shouldShow = false;
+          if (query === '') {
+            shouldShow = true;
+          } else if (query.includes('+')) {
+            shouldShow = queries.some(q => tags.some(tag => tag.includes(q)));
+          } else {
+            shouldShow = queries.every(q => tags.some(tag => tag.includes(q)));
+          }
+
+          if (shouldShow) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+
+        currentPosition = 0;
+        maxScroll = calculateMaxScroll();
+        track.style.transform = `translateX(0px)`;
+        if (trackId === 'newsTrack') {
+          window.newsCurrentPosition = currentPosition;
+          window.newsMaxScroll = maxScroll;
+        } else {
+          window.patentsCurrentPosition = currentPosition;
+          window.patentsMaxScroll = maxScroll;
         }
       });
 
-      // Reset scroll position
-      currentPosition = 0;
-      maxScroll = calculateMaxScroll();
-      track.style.transform = `translateX(0px)`;
-    });
+      let touchStartX = 0;
+      let touchEndX = 0;
+      let isDragging = false;
 
-    // Touch swipe functionality
-    let touchStartX = 0;
-    let touchEndX = 0;
-    let isDragging = false;
+      slider.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        isDragging = true;
+      });
 
-    slider.addEventListener('touchstart', (e) => {
-      touchStartX = e.changedTouches[0].screenX;
-      isDragging = true;
-    });
+      slider.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        touchEndX = e.changedTouches[0].screenX;
+        const deltaX = touchEndX - touchStartX;
+        track.style.transform = `translateX(${(trackId === 'newsTrack' ? window.newsCurrentPosition : window.patentsCurrentPosition) + deltaX}px)`;
+      });
 
-    slider.addEventListener('touchmove', (e) => {
-      if (!isDragging) return;
-      touchEndX = e.changedTouches[0].screenX;
-      const deltaX = touchEndX - touchStartX;
-      track.style.transform = `translateX(${currentPosition + deltaX}px)`;
-    });
+      slider.addEventListener('touchend', () => {
+        if (!isDragging) return;
+        isDragging = false;
+        const deltaX = touchEndX - touchStartX;
+        const threshold = cardWidth / 3;
+        if (Math.abs(deltaX) > threshold) {
+          scrollNews(deltaX > 0 ? -1 : 1, trackId);
+        } else {
+          track.style.transform = `translateX(${(trackId === 'newsTrack' ? window.newsCurrentPosition : window.patentsCurrentPosition)}px)`;
+        }
+      });
 
-    slider.addEventListener('touchend', () => {
-      if (!isDragging) return;
-      isDragging = false;
-      const deltaX = touchEndX - touchStartX;
-      const threshold = cardWidth / 3; // Swipe threshold for scrolling
-      if (Math.abs(deltaX) > threshold) {
-        scrollNews(deltaX > 0 ? -1 : 1);
-      } else {
-        track.style.transform = `translateX(${currentPosition}px)`;
-      }
-    });
+      window.addEventListener('resize', () => {
+        currentPosition = 0;
+        maxScroll = calculateMaxScroll();
+        track.style.transform = `translateX(0px)`;
+        if (trackId === 'newsTrack') {
+          window.newsCurrentPosition = currentPosition;
+          window.newsMaxScroll = maxScroll;
+        } else {
+          window.patentsCurrentPosition = currentPosition;
+          window.patentsMaxScroll = maxScroll;
+        }
+      });
+    }
 
-    // Handle window resize
-    window.addEventListener('resize', () => {
-      currentPosition = 0;
-      maxScroll = calculateMaxScroll();
-      track.style.transform = `translateX(0px)`;
-    });
+    window.newsCurrentPosition = 0;
+    window.newsMaxScroll = 0;
+    window.patentsCurrentPosition = 0;
+    window.patentsMaxScroll = 0;
+
+    setupSlider('newsTrack', 'newsSearchInput');
+    setupSlider('patentsTrack', 'patentsSearchInput');
   </script>
 </body>
 </html>
