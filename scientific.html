@@ -13,7 +13,7 @@
     }
 
     body {
-      font-family: Calibre, sans-serif;
+      font-family: Arial, sans-serif;
       background: #f5f5f5;
     }
 
@@ -274,7 +274,7 @@
       </div>
 
       <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search news by topic (e.g., Quantum, AI, Energy)">
+        <input type="text" id="searchInput" placeholder="Search news (e.g., quantum+ai, quantum,ai)">
       </div>
 
       <div class="scroll-container">
@@ -406,18 +406,43 @@
       track.style.transform = `translateX(${currentPosition}px)`;
     }
 
-    // Search functionality
+    // Search functionality with union (+) and intersection (,)
     searchInput.addEventListener('input', () => {
       const query = searchInput.value.toLowerCase().trim();
+      let queries = [];
+
+      // Handle union and intersection
+      if (query.includes('+')) {
+        queries = query.split('+').map(q => q.trim());
+      } else if (query.includes(',')) {
+        queries = query.split(',').map(q => q.trim());
+      } else {
+        queries = [query];
+      }
+
       cards.forEach(card => {
-        const tags = card.getAttribute('data-tags').toLowerCase();
-        if (query === '' || tags.includes(query)) {
+        const tags = card.getAttribute('data-tags').toLowerCase().split(',');
+
+        let shouldShow = false;
+        if (query === '') {
+          shouldShow = true; // Show all if query is empty
+        } else if (query.includes('+')) {
+          // Union: show if any tag matches any query
+          shouldShow = queries.some(q => tags.some(tag => tag.includes(q)));
+        } else {
+          // Intersection: show if all queries match tags
+          shouldShow = queries.every(q => tags.some(tag => tag.includes(q)));
+        }
+
+        if (shouldShow) {
           card.classList.remove('hidden');
         } else {
           card.classList.add('hidden');
         }
       });
-      currentPosition = 0; // Reset scroll position
+
+      // Reset scroll position
+      currentPosition = 0;
       maxScroll = calculateMaxScroll();
       track.style.transform = `translateX(0px)`;
     });
