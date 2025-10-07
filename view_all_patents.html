@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Patents</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+
+    .news-section {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+
+    .news-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #005599;
+      padding-bottom: 15px;
+      margin-bottom: 40px;
+    }
+
+    .news-header h2 {
+      color: #005599;
+      font-size: 28px;
+      margin: 0;
+    }
+
+    .filter-container {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .filter-container select {
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      outline: none;
+      min-width: 150px;
+    }
+
+    .filter-container select:focus {
+      border-color: #005599;
+      box-shadow: 0 0 5px rgba(0, 85, 153, 0.3);
+    }
+
+    .search-container {
+      margin-bottom: 20px;
+    }
+
+    .search-container input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      outline: none;
+    }
+
+    .search-container input:focus {
+      border-color: #005599;
+      box-shadow: 0 0 5px rgba(0, 85, 153, 0.3);
+    }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .news-card {
+      background: #fafafa;
+      border: 1px solid #ddd;
+      border-top: 4px solid #ff6600;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      cursor: pointer;
+    }
+
+    .news-card.hidden {
+      display: none;
+    }
+
+    .news-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .news-card h3 {
+      color: #003366;
+      font-size: 18px;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    .news-card h3 .highlight {
+      color: #ff6600;
+      font-weight: bold;
+    }
+
+    .news-card p {
+      color: #555;
+      font-size: 14px;
+      line-height: 1.6;
+      text-align: justify;
+    }
+
+    .news-date {
+      color: #999;
+      font-size: 12px;
+      margin-bottom: 8px;
+      font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+      main {
+        padding: 20px 10px;
+      }
+
+      .news-section {
+        padding: 20px;
+      }
+
+      .news-header h2 {
+        font-size: 22px;
+      }
+
+      .news-header {
+        margin-bottom: 30px;
+      }
+
+      .filter-container {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .news-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      }
+    }
+
+    @media (max-width: 480px) {
+      .news-card {
+        padding: 15px;
+      }
+
+      .news-card h3 {
+        font-size: 16px;
+      }
+
+      .news-card p {
+        font-size: 13px;
+      }
+
+      .news-header h2 {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>All News & Updates</h1>
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <div class="dropdown">
+      <a href="#">What's New ▾</a>
+      <div class="dropdown-content">
+        <a href="news.html">News</a>
+        <a href="scientific.html">Scientific Advancements</a>
+        <a href="reports.html">Reports</a>
+        <a href="miscellaneous.html">Miscellaneous</a>
+      </div>
+    </div>
+    <a href="events.html">Events</a>
+    <a href="people_in_quantum.html">People in Quantum</a>
+    <a href="startups.html">For Startups</a>
+    <a href="education.html">Quantum Education</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <main>
+    <section class="news-section">
+      <div class="news-header">
+        <h2>Patents</h2>
+      </div>
+
+      <div class="filter-container">
+        <select id="yearSelect">
+          <option value="">All Years</option>
+          <option value="2025">2025</option>
+          <!-- Add more years as needed -->
+        </select>
+        <select id="monthSelect">
+          <option value="">All Months</option>
+          <option value="1">January</option>
+          <option value="2">February</option>
+          <option value="3">March</option>
+          <option value="4">April</option>
+          <option value="5">May</option>
+          <option value="6">June</option>
+          <option value="7">July</option>
+          <option value="8">August</option>
+          <option value="9">September</option>
+          <option value="10">October</option>
+          <option value="11">November</option>
+          <option value="12">December</option>
+        </select>
+      </div>
+
+      <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search news (e.g., quantum+ai, quantum,ai)">
+      </div>
+
+      <div class="news-grid" id="newsGrid">
+        <a href="news-quantum-computing.html" class="news-card" data-tags="quantum,computing,technology" data-year="2025" data-month="10" data-date="2025-10-05">
+          <div class="news-date">October 5, 2025</div>
+          <h3>
+            <span class="highlight">Breakthrough</span> in Quantum Computing
+          </h3>
+          <p>
+            Researchers have achieved a major milestone in quantum error correction,
+            bringing us closer to practical quantum computers. The new technique
+            reduces error rates by 40% compared to previous methods, paving the way
+            for more stable quantum operations.
+          </p>
+        </a>
+
+        <a href="news-ai-medical-diagnosis.html" class="news-card" data-tags="ai,medical,healthcare" data-year="2025" data-month="10" data-date="2025-10-04">
+          <div class="news-date">October 4, 2025</div>
+          <h3>
+            <span class="highlight">AI Model</span> Surpasses Human Performance
+          </h3>
+          <p>
+            A new artificial intelligence system has demonstrated unprecedented
+            capabilities in medical diagnosis, achieving 95% accuracy in detecting
+            early-stage diseases. This advancement could revolutionize healthcare
+            screening and save countless lives through early intervention.
+          </p>
+        </a>
+
+        <a href="news-renewable-energy.html" class="news-card" data-tags="energy,solar,renewable" data-year="2025" data-month="10" data-date="2025-10-03">
+          <div class="news-date">October 3, 2025</div>
+          <h3>
+            <span class="highlight">Renewable Energy</span> Reaches New Heights
+          </h3>
+          <p>
+            Solar panel efficiency has reached a record-breaking 32% conversion rate
+            using advanced perovskite materials. This innovation could significantly
+            reduce the cost of solar energy and accelerate the transition to
+            sustainable power sources worldwide.
+          </p>
+        </a>
+
+        <a href="news-mars-mission.html" class="news-card" data-tags="space,mars,exploration" data-year="2025" data-month="10" data-date="2025-10-02">
+          <div class="news-date">October 2, 2025</div>
+          <h3>
+            <span class="highlight">Space Exploration</span> Mission Announced
+          </h3>
+          <p>
+            International space agencies have unveiled plans for the first crewed
+            mission to Mars, scheduled for 2032. The mission will establish a
+            research base to study the planet's geology and search for signs of
+            past microbial life.
+          </p>
+        </a>
+
+        <a href="news-nanotechnology-cancer.html" class="news-card" data-tags="nanotechnology,medicine,cancer" data-year="2025" data-month="10" data-date="2025-10-01">
+          <div class="news-date">October 1, 2025</div>
+          <h3>
+            <span class="highlight">Nanotechnology</span> Advances in Medicine
+          </h3>
+          <p>
+            Scientists have developed targeted nanoparticles that can deliver
+            chemotherapy directly to cancer cells while sparing healthy tissue.
+            Clinical trials show promising results with reduced side effects and
+            improved treatment outcomes for patients.
+          </p>
+        </a>
+
+        <a href="news-battery-technology.html" class="news-card" data-tags="battery,technology,energy" data-year="2025" data-month="9" data-date="2025-09-30">
+          <div class="news-date">September 30, 2025</div>
+          <h3>
+            <span class="highlight">Battery Technology</span> Revolution
+          </h3>
+          <p>
+            A new solid-state battery design offers triple the energy density of
+            current lithium-ion batteries while charging in just 10 minutes. This
+            breakthrough could transform electric vehicles and portable electronics
+            within the next five years.
+          </p>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 MCC - Mission Coordination Cell.</p>
+  </footer>
+
+  <script>
+    const cards = document.querySelectorAll('.news-card');
+    const yearSelect = document.getElementById('yearSelect');
+    const monthSelect = document.getElementById('monthSelect');
+    const searchInput = document.getElementById('searchInput');
+
+    function applyFilters() {
+      const selectedYear = yearSelect.value;
+      const selectedMonth = monthSelect.value;
+      const query = searchInput.value.toLowerCase().trim();
+      let queries = [];
+
+      if (query.includes('+')) {
+        queries = query.split('+').map(q => q.trim());
+      } else if (query.includes(',')) {
+        queries = query.split(',').map(q => q.trim());
+      } else {
+        queries = [query];
+      }
+
+      cards.forEach(card => {
+        const cardYear = card.getAttribute('data-year');
+        const cardMonth = card.getAttribute('data-month');
+        const tags = card.getAttribute('data-tags').toLowerCase().split(',');
+
+        let matchesDate = true;
+        if (selectedYear && cardYear !== selectedYear) {
+          matchesDate = false;
+        }
+        if (selectedMonth && cardMonth !== selectedMonth) {
+          matchesDate = false;
+        }
+
+        let matchesSearch = false;
+        if (query === '') {
+          matchesSearch = true;
+        } else if (query.includes('+')) {
+          matchesSearch = queries.some(q => tags.some(tag => tag.includes(q)));
+        } else {
+          matchesSearch = queries.every(q => tags.some(tag => tag.includes(q)));
+        }
+
+        if (matchesDate && matchesSearch) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+
+    yearSelect.addEventListener('change', applyFilters);
+    monthSelect.addEventListener('change', applyFilters);
+    searchInput.addEventListener('input', applyFilters);
+
+    // Apply initial filters (show all)
+    applyFilters();
+
+    // Handle previous search from URL parameters if any
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchQuery = urlParams.get('search');
+    if (searchQuery) {
+      searchInput.value = searchQuery;
+      applyFilters();
+    }
+  </script>
+</body>
+</html>
