@@ -1,704 +1,355 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style.css">
-  <title>News and Patents Section with Horizontal Scroll</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+/* ===== Global Styles ===== */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #003366;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+nav {
+    background-color: #005599;
+    padding: 10px;
+    text-align: center;
+}
+
+nav a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+    padding: 8px;
+}
+
+/* ===== Main Content ===== */
+main {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding-bottom: 60px; /* space for footer */
+}
+
+article {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.person {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+/* ===== Tabs ===== */
+.tab-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+.tab-container button {
+    background-color: #003366;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    cursor: pointer;
+    margin: 0 5px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+.tab-container button.active,
+.tab-container button:hover {
+    background-color: #0055aa;
+}
+
+/* Sections */
+.tab-section {
+    display: none;   /* hide all by default */
+}
+.tab-section.active {
+    display: block;  /* only active is visible */
+}
+
+/* ===== Profile Card ===== */
+.profile {
+    border: 1px solid #333;
+    margin: 20px 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;  /* This keeps image at top */
+    padding: 15px;
+    background: white;
+    gap: 15px;
+}
+
+.profile img {
+    max-width: 180px;
+    height: auto;
+    margin-top: 50px;
+    border-radius: 8px;
+    margin-right: 20px;
+    align-self: flex-start;  /* ADD THIS - ensures image stays at top */
+}
+
+.profile-info {
+    flex: 1;
+    min-width: 200px;
+}
+.profile-info h2 {
+    margin: 0;
+    margin-bottom: 5px;  /* ADD THIS - small spacing after name */
+}
+.profile-info p {
+    margin: 5px 0;
+}
+
+/* Table inside profile */
+.profile-info table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+.profile-info td {
+    padding: 8px;
+    border: 1px solid #333;
+    word-wrap: break-word;
+    vertical-align: top;  /* ADD THIS - aligns cell content to top */
+}
+
+/* First column (labels) can be bold */
+.profile-info td:first-child {
+    font-weight: normal;
+    width: 30%;  /* Adjust as needed */
+}
+
+/* Show data-label as content before the cell value */
+.profile-info td::before {
+    content: attr(data-label) ": ";
+    font-weight: bold;
+    display: inline;
+}
+
+/* ===== Footer ===== */
+footer {
+    background-color: #003366;
+    color: white;
+    text-align: center;
+    padding: 2px 5px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    font-size: 0.8em;
+    line-height: 1.2;
+    box-sizing: border-box;
+    white-space: normal;
+    overflow: visible;
+    max-height: 50px;
+    overflow-y: auto;
+}
+
+/* ===== Forms ===== */
+form {
+    margin-top: 20px;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+button {
+    background-color: #005599;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+/* ===== Images ===== */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ===== Dropdown Menu ===== */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #005599;
+    min-width: 200px;
+    box-shadow: 0px 4px 6px rgba(0,0,0,0.2);
+    z-index: 1;
+    text-align: left;
+}
+
+.dropdown-content a {
+    color: white;
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+}
+
+.dropdown-content a:hover {
+    background-color: #003366;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* ===== Responsive Adjustments ===== */
+@media (max-width: 768px) {
+    /* Navigation - Stack links vertically */
+    nav {
+        padding: 5px;
+    }
+    
+    nav a {
+        display: block;
+        margin: 5px auto;
+        padding: 10px;
+        max-width: 200px;
+    }
+    
+    /* Dropdown adjustments for mobile */
+    .dropdown-content {
+        position: static;
+        box-shadow: none;
+        min-width: 100%;
     }
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
+    /* Header - Reduce padding */
+    header {
+        padding: 15px 10px;
+    }
+    
+    header h1 {
+        font-size: 1.5em;
     }
 
+    /* Main content - Reduce padding */
     main {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 30px 20px;
+        padding: 10px;
+        padding-bottom: 70px;
+    }
+    
+    main h2 {
+        font-size: 1.3em;
     }
 
-    .news-section, .patents-section {
-      background: #fff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-      margin-bottom: 40px;
+    /* Tab buttons - Stack or wrap better */
+    .tab-container {
+        flex-wrap: wrap;
+        gap: 5px;
     }
-
-    .news-header, .patents-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 2px solid #005599;
-      padding-bottom: 15px;
-      margin-bottom: 40px;
-    }
-
-    .news-header h2, .patents-header h2 {
-      color: #005599;
-      font-size: 28px;
-      margin: 0;
-    }
-
-    .news-header a, .patents-header a {
-      text-decoration: none;
-      color: #ff6600;
-      font-weight: bold;
-      font-size: 16px;
-    }
-
-    .news-header a:hover, .patents-header a:hover {
-      text-decoration: underline;
-    }
-
-    .search-container {
-      margin-bottom: 20px;
-    }
-
-    .search-container input {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      outline: none;
-    }
-
-    .search-container input:focus {
-      border-color: #005599;
-      box-shadow: 0 0 5px rgba(0, 85, 153, 0.3);
-    }
-
-    .scroll-container {
-      position: relative;
-      padding: 0 60px;
-      touch-action: pan-y;
-    }
-
-    .arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 50px;
-      height: 50px;
-      background: #005599;
-      border: none;
-      border-radius: 50%;
-      color: white;
-      font-size: 24px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.3s ease;
-      z-index: 10;
-    }
-
-    .arrow:hover {
-      background: #003d73;
-    }
-
-    .arrow:active {
-      transform: translateY(-50%) scale(0.95);
-    }
-
-    .arrow-left {
-      left: 0;
-    }
-
-    .arrow-right {
-      right: 0;
-    }
-
-    .news-slider, .patents-slider {
-      overflow: hidden;
-      position: relative;
-    }
-
-    .news-track, .patents-track {
-      display: flex;
-      gap: 15px;
-      transition: transform 0.5s ease;
-    }
-
-    .news-card, .patents-card {
-      flex: 0 0 300px;
-      background: #fafafa;
-      border: 1px solid #ddd;
-      border-top: 4px solid #ff6600;
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      text-decoration: none;
-      color: inherit;
-      display: block;
-      cursor: pointer;
-    }
-
-    .news-card.hidden, .patents-card.hidden {
-      display: none;
-    }
-
-    .news-card:hover, .patents-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    }
-
-    .news-card h3, .patents-card h3 {
-      color: #003366;
-      font-size: 18px;
-      margin-bottom: 12px;
-      line-height: 1.4;
-    }
-
-    .news-card h3 .highlight, .patents-card h3 .highlight {
-      color: #ff6600;
-      font-weight: bold;
-    }
-
-    .news-card p, .patents-card p {
-      color: #555;
-      font-size: 14px;
-      line-height: 1.6;
-      text-align: justify;
-    }
-
-    .news-date, .patents-date {
-      color: #999;
-      font-size: 12px;
-      margin-bottom: 8px;
-      font-style: italic;
-    }
-
-    @media (max-width: 768px) {
-      main {
-        padding: 20px 10px;
-      }
-
-      .news-section, .patents-section {
-        padding: 20px;
-      }
-
-      .scroll-container {
-        padding: 0 50px;
-      }
-
-      .arrow {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
-      }
-
-      .news-card, .patents-card {
-        flex: 0 0 250px;
-      }
-
-      .news-header h2, .patents-header h2 {
-        font-size: 22px;
-      }
-
-      .news-header, .patents-header {
-        margin-bottom: 30px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .scroll-container {
-        padding: 0 40px;
-      }
-
-      .arrow {
-        width: 35px;
-        height: 35px;
-        font-size: 18px;
-      }
-
-      .news-card, .patents-card {
-        flex: 0 0 220px;
-        padding: 15px;
-      }
-
-      .news-card h3, .patents-card h3 {
-        font-size: 16px;
-      }
-
-      .news-card p, .patents-card p {
-        font-size: 13px;
-      }
-
-      .news-header h2, .patents-header h2 {
-        font-size: 20px;
-      }
-
-      .news-header a, .patents-header a {
+    
+    .tab-container button {
+        padding: 10px 15px;
         font-size: 14px;
-      }
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>What's New</h1>
-  </header>
-
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <div class="dropdown">
-      <a href="#">What's New ▾</a>
-      <div class="dropdown-content">
-        <a href="news.html">News</a>
-        <a href="scientific.html">Scientific Advancements</a>
-        <a href="reports.html">Reports</a>
-        <a href="miscellaneous.html">Miscellaneous</a>
-      </div>
-    </div>
-    <a href="events.html">Events</a>
-    <a href="people_in_quantum.html">People in Quantum</a>
-    <a href="startups.html">For Startups</a>
-    <a href="education.html">Quantum Education</a>
-    <a href="contact.html">Contact</a>
-  </nav>
-
-  <main>
-    <!-- News Section -->
-    <section class="news-section">
-      <div class="news-header">
-        <h2>Latest Scientific Advancements</h2>
-        <a href="view_all.html">View all</a>
-      </div>
-
-      <div class="search-container">
-        <input type="text" id="newsSearchInput" placeholder="Search news (e.g., quantum+ai, quantum,ai)">
-      </div>
-
-      <div class="scroll-container">
-        <button class="arrow arrow-left" onclick="scrollNews(-1, 'newsTrack')">‹</button>
-
-        <div class="news-slider">
-          <div class="news-track" id="newsTrack">
-            <a href="https://phys.org/news/2025-09-qubit-neutral-atom-array-reloads.html" target="_blank" class="news-card" data-tags="computing,technology,neutral atoms, array, qubits,3000">
-              <div class="news-date">September, 2025</div>
-              <h3>
-                <span class="highlight">New, improved 3,000-qubit neutral atom array </span>   system reloads atoms continuously for more than two hours
-              </h3>
-              <p> 
-                The team of Harvard researchers involved in this study have engineered a 3,000-qubit neutral atom array system capable of operating continuously for more than two hours, which goes far beyond typical trap lifetimes of only about 60 seconds.
-              </p>
-            </a>
-<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-            <a href="https://phys.org/news/2025-09-scalable-accurate-tool-characterize-entanglement.html" target="_blank" class="news-card" data-tags="computing,processors,entanglement">
-              <div class="news-date">September, 2025</div>
-              <h3>
-                <span class="highlight">A scalable and accurate tool </span>  to characterize entanglement in quantum processors
-              </h3>
-              <p> 
-                The research team led by Dapeng Yu at Shenzhen International Quantum Academy, Tongji University and other institutes in China recently introduced a new mathematical tool that could be used to characterize quantum states in quantum processors with greater accuracy. Their proposed method, was successfully used to characterize entanglement between 17 qubits in a superconducting quantum processor.
-              </p>
-            </a>
-<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-            <a href="https://phys.org/news/2025-09-quantum-memories-milestone-money-protocol.html" target="_blank" class="news-card" data-tags="Communication,Quantum memories, protocol">
-              <div class="news-date">September, 2025</div>
-              <h3>
-                <span class="highlight">Quantum memories</span>  reach new milestone with secure quantum money protocol
-              </h3>
-              <p> 
-                The Paris team implemented Wiesner's quantum money, a foundational idea in quantum cryptography that relies on the no-cloning theorem to prevent counterfeiting. Integration into a quantum money protocol shows that memories can now handle very demanding applications for quantum networking.
-              </p>
-            </a>
-<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-            <a href="https://physicsworld.com/a/protein-qubit-can-be-used-as-a-quantum-biosensor/" target="_blank" class="news-card" data-tags="computing,qubit,protein,biosensor">
-              <div class="news-date">September, 2025</div>
-              <h3>
-                <span class="highlight">Protein qubit</span> can be used as a quantum biosensor
-              </h3>
-              <p> 
-                A new optically addressable quantum bit (qubit) encoded in a fluorescent protein could be used as a sensor that can be directly produced inside living cells. The device opens up a new era for fluorescence microscopy to monitor biological processes, say the researchers at the University of Chicago Pritzker School of Molecular Engineering who designed the novel qubit.
-              </p>
-            </a>
-<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-            <a href="https://scitechdaily.com/scientists-crack-a-40-year-puzzle-in-unbreakable-encryption/" target="_blank" class="news-card" data-tags="communication,encryption,unbreakable,security,cryptography">
-              <div class="news-date">September, 2025</div>
-              <h3>
-                <span class="highlight">Scientists Crack</span>  a 40-Year Puzzle in Unbreakable Encryption
-              </h3>
-              <p> 
-                Scientists once believed perfect light sources were essential for unbreakable quantum encryption. A new approach using engineered quantum dots and novel protocols makes even imperfect light secure. Real-world tests show it outperforms existing systems, moving practical quantum-safe communication closer.
-              </p>
-            </a>
-<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-            <a href="https://www.cqt.sg/highlight/2024-04-portable-atomic-gravimeter/" target="_blank" class="news-card" data-tags="sensing,atomic,gravimeter">
-              <div class="news-date">September, 2025</div>
-              <h3>
-                <span class="highlight">Portable atomic gravimeter</span>  shows promise in the field
-              </h3>
-              <p> 
-                The group of Principal Investigator Rainer Dumke has published results from a gravity survey at Sembawang in Singapore. Portable atomic gravimeter field work (Singapore, CQT / Earth Observatory Singapore) detecting gravity anomaly in Sembawang. 
-              </p>
-            </a>
-
-<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-            <a href="https://theconversation.com/new-entanglement-breakthrough-links-cores-of-atoms-brings-quantum-computers-closer-265668https://theconversation.com/new-entanglement-breakthrough-links-cores-of-atoms-brings-quantum-computers-closer-265668" target="_blank" class="news-card" data-tags="computing,entanglement,atoms">
-              <div class="news-date">September, 2025</div>
-              <h3>
-                <span class="highlight">New entanglement breakthrough</span>  links cores of atoms, brings quantum computers closer
-              </h3>
-              <p> 
-                Stemp et al. now demonstrate direct entanglement between two nuclear spins that are separated by a relatively long distance. Two phosphorus atoms implanted in silicon formed a system comprising two 31P nuclei and two bound electrons. Control of the exchange interaction between the two electrons resulted in quantum entanglement of the two nuclear spins. The results and scalability of the method are promising for the development of nuclear spin–based quantum computers.
-              </p>
-            </a>
-<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-            <a href="https://phys.org/news/2025-09-relay-architecture-based-quantum-dot.html" target="_blank" class="news-card" data-tags="communication,quantum dot,secure,single,photon, source">
-              <div class="news-date">September, 2025</div>
-              <h3>
-                <span class="highlight">New relay architecture based on a quantum dot single-photon source</span>  enables secure communication across 300 km
-              </h3>
-              <p> 
-                Researchers at the University of Science and Technology of China recently developed a new intermediate relay architecture that could be more scalable than other relays introduced in earlier studies. This architecture, outlined in a paper published in Nature Physics, allowed them to realize secure quantum communications between devices that are up to 300 km apart.
-              </p>
-            </a>
-<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-            <a href="https://phys.org/news/2025-09-physicists-qubit-array.html" target="_blank" class="news-card" data-tags="computing,neutral, atoms, qubits, 6100, array">
-              <div class="news-date">September, 2025</div>
-              <h3>
-                <span class="highlight">Physicists set record</span>  with 6,100-qubit array
-              </h3>
-              <p> 
-                Caltech physicists have created the largest qubit array ever assembled: 6,100 neutral-atom qubits trapped in a grid by lasers. Previous arrays of this kind contained only hundreds of qubits.
-              </p>
-            </a>
-<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-            <a href="https://phys.org/news/2025-09-proven-quantum-advantage-task-million.html" target="_blank" class="news-card" data-tags="computing,quantum advantage,learning">
-              <div class="news-date">September, 2025</div>
-              <h3>
-                <span class="highlight">Proven quantum advantage:</span>  Researchers cut the time for a learning task from 20 million years to 15 minutes
-              </h3>
-              <p> 
-                Researchers at the Technical University of Denmark (DTU) and international partners have demonstrated that entangled light can cut the number of measurements needed to learn the behavior of a complex, noisy quantum system by an enormous factor.
-              </p>
-            </a>
-<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-            <a href="https://phys.org/news/2025-09-quantum-random-generator-combines-small.html" target="_blank" class="news-card" data-tags="communication,chip,quantum random number generator, qrng,high speed">
-              <div class="news-date">September, 2025</div>
-              <h3>
-                <span class="highlight">Quantum random number generator</span> combines small size and high speed
-              </h3>
-              <p> 
-                Researchers have developed a chip-based quantum random number generator that provides high-speed, high-quality operation on a miniaturized platform. This advance could help move quantum random number generators closer to being built directly into everyday devices, where they could strengthen security without sacrificing speed
-              </p>
-            </a>
-
-<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
-            <a href="link.html" class="news-card" data-tags="quantum,computing,technology">
-              <div class="news-date">September, 2025</div>
-              <h3>
-                <span class="highlight">Title</span> title
-              </h3>
-              <p> 
-                text
-              </p>
-            </a>
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
-            <a href="link.html" class="news-card" data-tags="quantum,computing,technology">
-              <div class="news-date">September, 2025</div>
-              <h3>
-                <span class="highlight">Title</span> title
-              </h3>
-              <p> 
-                text
-              </p>
-            </a>
- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
-            <a href="link.html" class="news-card" data-tags="quantum,computing,technology">
-              <div class="news-date">September, 2025</div>
-              <h3>
-                <span class="highlight">Title</span> title
-              </h3>
-              <p> 
-                text
-              </p>
-            </a>
- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-
-          </div>
-        </div>
-
-        <button class="arrow arrow-right" onclick="scrollNews(1, 'newsTrack')">›</button>
-      </div>
-    </section>
-
-    <!-- Patents Section -->
-    <section class="patents-section">
-      <div class="patents-header">
-        <h2>Latest Patents</h2>
-        <a href="view_all_patents.html">View all</a>
-      </div>
-
-      <div class="search-container">
-        <input type="text" id="patentsSearchInput" placeholder="Search patents (e.g., quantum+ai, quantum,ai)">
-      </div>
-
-      <div class="scroll-container">
-        <button class="arrow arrow-left" onclick="scrollNews(-1, 'patentsTrack')">‹</button>
-
-        <div class="patents-slider">
-          <div class="patents-track" id="patentsTrack">
-            <a href="patent-quantum-computing.html" class="patents-card" data-tags="quantum,computing,technology">
-              <div class="patents-date">October 5, 2025</div>
-              <h3>
-                <span class="highlight">Breakthrough</span> in Quantum Computing
-              </h3>
-              <p>
-                Researchers have achieved a major milestone in quantum error correction,
-                bringing us closer to practical quantum computers. The new technique
-                reduces error rates by 40% compared to previous methods, paving the way
-                for more stable quantum operations.
-              </p>
-            </a>
-
-            <a href="patent-ai-medical-diagnosis.html" class="patents-card" data-tags="ai,medical,healthcare">
-              <div class="patents-date">October 4, 2025</div>
-              <h3>
-                <span class="highlight">AI Model</span> Surpasses Human Performance
-              </h3>
-              <p>
-                A new artificial intelligence system has demonstrated unprecedented
-                capabilities in medical diagnosis, achieving 95% accuracy in detecting
-                early-stage diseases. This advancement could revolutionize healthcare
-                screening and save countless lives through early intervention.
-              </p>
-            </a>
-
-            <a href="patent-renewable-energy.html" class="patents-card" data-tags="energy,solar,renewable">
-              <div class="patents-date">October 3, 2025</div>
-              <h3>
-                <span class="highlight">Renewable Energy</span> Reaches New Heights
-              </h3>
-              <p>
-                Solar panel efficiency has reached a record-breaking 32% conversion rate
-                using advanced perovskite materials. This innovation could significantly
-                reduce the cost of solar energy and accelerate the transition to
-                sustainable power sources worldwide.
-              </p>
-            </a>
-
-            <a href="patent-mars-mission.html" class="patents-card" data-tags="space,mars,exploration">
-              <div class="patents-date">October 2, 2025</div>
-              <h3>
-                <span class="highlight">Space Exploration</span> Mission Announced
-              </h3>
-              <p>
-                International space agencies have unveiled plans for the first crewed
-                mission to Mars, scheduled for 2032. The mission will establish a
-                research base to study the planet's geology and search for signs of
-                past microbial life.
-              </p>
-            </a>
-
-            <a href="patent-nanotechnology-cancer.html" class="patents-card" data-tags="nanotechnology,medicine,cancer">
-              <div class="patents-date">October 1, 2025</div>
-              <h3>
-                <span class="highlight">Nanotechnology</span> Advances in Medicine
-              </h3>
-              <p>
-                Scientists have developed targeted nanoparticles that can deliver
-                chemotherapy directly to cancer cells while sparing healthy tissue.
-                Clinical trials show promising results with reduced side effects and
-                improved treatment outcomes for patients.
-              </p>
-            </a>
-
-            <a href="patent-battery-technology.html" class="patents-card" data-tags="battery,technology,energy">
-              <div class="patents-date">September 30, 2025</div>
-              <h3>
-                <span class="highlight">Battery Technology</span> Revolution
-              </h3>
-              <p>
-                A new solid-state battery design offers triple the energy density of
-                current lithium-ion batteries while charging in just 10 minutes. This
-                breakthrough could transform electric vehicles and portable electronics
-                within the next five years.
-              </p>
-            </a>
-          </div>
-        </div>
-
-        <button class="arrow arrow-right" onclick="scrollNews(1, 'patentsTrack')">›</button>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 MCC - Mission Coordination Cell.</p>
-  </footer>
-
-<script>
-    function setupSlider(trackId, searchInputId) {
-      const track = document.getElementById(trackId);
-      const isNewsTrack = trackId === 'newsTrack';
-      const cardClass = isNewsTrack ? 'news-card' : 'patents-card';
-      const searchInput = document.getElementById(searchInputId);
-      const slider = track.parentElement;
-      const cardWidth = 315; // 300px width + 15px gap
-
-      function getVisibleCards() {
-        return Array.from(track.querySelectorAll(`.${cardClass}`)).filter(card => !card.classList.contains('hidden'));
-      }
-
-      function calculateMaxScroll() {
-        const visibleCards = getVisibleCards();
-        const containerWidth = slider.offsetWidth;
-        const totalWidth = cardWidth * visibleCards.length;
-        return Math.min(0, containerWidth - totalWidth);
-      }
-
-      // Initialize position trackers
-      if (isNewsTrack) {
-        window.newsCurrentPosition = 0;
-        window.newsMaxScroll = calculateMaxScroll();
-      } else {
-        window.patentsCurrentPosition = 0;
-        window.patentsMaxScroll = calculateMaxScroll();
-      }
-
-      searchInput.addEventListener('input', () => {
-        const query = searchInput.value.toLowerCase().trim();
-        let queries = [];
-        
-        if (query.includes('+')) {
-          queries = query.split('+').map(q => q.trim());
-        } else if (query.includes(',')) {
-          queries = query.split(',').map(q => q.trim());
-        } else {
-          queries = [query];
-        }
-
-        const allCards = track.querySelectorAll(`.${cardClass}`);
-        allCards.forEach(card => {
-          const tags = card.getAttribute('data-tags').toLowerCase().split(',').map(t => t.trim());
-          let shouldShow = false;
-          
-          if (query === '') {
-            shouldShow = true;
-          } else if (query.includes('+')) {
-            shouldShow = queries.some(q => tags.some(tag => tag.includes(q)));
-          } else {
-            shouldShow = queries.every(q => tags.some(tag => tag.includes(q)));
-          }
-
-          if (shouldShow) {
-            card.classList.remove('hidden');
-          } else {
-            card.classList.add('hidden');
-          }
-        });
-
-        // Reset position after filtering
-        if (isNewsTrack) {
-          window.newsCurrentPosition = 0;
-          window.newsMaxScroll = calculateMaxScroll();
-        } else {
-          window.patentsCurrentPosition = 0;
-          window.patentsMaxScroll = calculateMaxScroll();
-        }
-        track.style.transform = 'translateX(0px)';
-      });
-
-      // Touch support
-      let touchStartX = 0;
-      let touchEndX = 0;
-      let isDragging = false;
-
-      slider.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-        isDragging = true;
-      });
-
-      slider.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-        touchEndX = e.changedTouches[0].screenX;
-        const deltaX = touchEndX - touchStartX;
-        const currentPos = isNewsTrack ? window.newsCurrentPosition : window.patentsCurrentPosition;
-        track.style.transform = `translateX(${currentPos + deltaX}px)`;
-      });
-
-      slider.addEventListener('touchend', () => {
-        if (!isDragging) return;
-        isDragging = false;
-        const deltaX = touchEndX - touchStartX;
-        const threshold = cardWidth / 3;
-        if (Math.abs(deltaX) > threshold) {
-          scrollNews(deltaX > 0 ? -1 : 1, trackId);
-        } else {
-          const currentPos = isNewsTrack ? window.newsCurrentPosition : window.patentsCurrentPosition;
-          track.style.transform = `translateX(${currentPos}px)`;
-        }
-      });
-
-      // Handle resize
-      window.addEventListener('resize', () => {
-        if (isNewsTrack) {
-          window.newsCurrentPosition = 0;
-          window.newsMaxScroll = calculateMaxScroll();
-        } else {
-          window.patentsCurrentPosition = 0;
-          window.patentsMaxScroll = calculateMaxScroll();
-        }
-        track.style.transform = 'translateX(0px)';
-      });
+        margin: 2px;
+        flex: 1 1 auto;
+        min-width: 120px;
     }
 
-    window.scrollNews = function(direction, trackId) {
-      const track = document.getElementById(trackId);
-      const isNewsTrack = trackId === 'newsTrack';
-      const slider = track.parentElement;
-      const cardWidth = 315;
+    /* Profile card - Stack vertically */
+    .profile {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 10px;
+    }
 
-      let currentPosition = isNewsTrack ? window.newsCurrentPosition : window.patentsCurrentPosition;
-      let maxScroll = isNewsTrack ? window.newsMaxScroll : window.patentsMaxScroll;
+    .profile img {
+        margin: 0 0 15px 0;
+        max-width: 150px;
+    }
 
-      const cardsToScroll = Math.max(1, Math.floor(Math.floor(slider.offsetWidth / cardWidth) / 2));
-      currentPosition -= direction * cardWidth * cardsToScroll;
+    .profile-info {
+        width: 100%;
+        text-align: left;
+    }
+    
+    .profile-info h2 {
+        font-size: 1.4em;
+        text-align: center;
+    }
+    
+    .profile-info > p {
+        text-align: center;
+        font-size: 0.95em;
+    }
 
-      // Recalculate max scroll
-      const visibleCards = Array.from(track.querySelectorAll(`.${isNewsTrack ? 'news-card' : 'patents-card'}`))
-        .filter(card => !card.classList.contains('hidden'));
-      const totalWidth = cardWidth * visibleCards.length;
-      maxScroll = Math.min(0, slider.offsetWidth - totalWidth);
+    /* Convert table to stacked view on mobile */
+    .profile-info table,
+    .profile-info tbody,
+    .profile-info tr,
+    .profile-info td {
+        display: block;
+        width: 100%;
+    }
 
-      if (currentPosition > 0) {
-        currentPosition = 0;
-      }
-      if (currentPosition < maxScroll) {
-        currentPosition = maxScroll;
-      }
+    .profile-info tr {
+        margin-bottom: 12px;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 8px;
+    }
 
-      track.style.transform = `translateX(${currentPosition}px)`;
-      
-      if (isNewsTrack) {
-        window.newsCurrentPosition = currentPosition;
-        window.newsMaxScroll = maxScroll;
-      } else {
-        window.patentsCurrentPosition = currentPosition;
-        window.patentsMaxScroll = maxScroll;
-      }
-    };
+    .profile-info td {
+        border: none;
+        padding: 4px 0;
+        word-break: break-word;
+    }
 
-    // Initialize both sliders
-    window.newsCurrentPosition = 0;
-    window.newsMaxScroll = 0;
-    window.patentsCurrentPosition = 0;
-    window.patentsMaxScroll = 0;
+    .profile-info td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: block;
+        color: #003366;
+        margin-bottom: 3px;
+    }
+    
+    .profile-info td a {
+        word-break: break-all;
+    }
 
-    setupSlider('newsTrack', 'newsSearchInput');
-    setupSlider('patentsTrack', 'patentsSearchInput');
-  </script>
-</body>
-</html>
+    /* Footer adjustments */
+    footer {
+        font-size: 0.7em;
+        padding: 5px;
+        max-height: 60px;
+        position: relative;
+    }
+    
+    footer p {
+        margin: 5px 0;
+    }
+
+    /* Form elements - Better touch targets */
+    input, textarea {
+        font-size: 16px; /* Prevents zoom on iOS */
+        padding: 12px;
+    }
+    
+    button {
+        padding: 12px;
+        font-size: 16px;
+    }
+}
