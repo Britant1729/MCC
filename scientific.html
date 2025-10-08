@@ -539,56 +539,39 @@
     <p>&copy; 2025 MCC - Mission Coordination Cell.</p>
   </footer>
 
-  <script>
+<script>
     function setupSlider(trackId, searchInputId) {
-      let currentPosition = 0;
       const track = document.getElementById(trackId);
-      const cards = track.querySelectorAll(`.${trackId.includes('news') ? 'news-card' : 'patents-card'}`);
-      const cardWidth = 315; // 300px width + 15px gap
-      const slider = track.parentElement;
+      const isNewsTrack = trackId === 'newsTrack';
+      const cardClass = isNewsTrack ? 'news-card' : 'patents-card';
       const searchInput = document.getElementById(searchInputId);
+      const slider = track.parentElement;
+      const cardWidth = 315; // 300px width + 15px gap
 
-      const visibleCards = () => Math.floor(slider.offsetWidth / cardWidth);
+      function getVisibleCards() {
+        return Array.from(track.querySelectorAll(`.${cardClass}`)).filter(card => !card.classList.contains('hidden'));
+      }
+
       function calculateMaxScroll() {
+        const visibleCards = getVisibleCards();
         const containerWidth = slider.offsetWidth;
-        const visibleCardCount = Array.from(cards).filter(card => !card.classList.contains('hidden')).length;
-        const totalWidth = cardWidth * visibleCardCount;
+        const totalWidth = cardWidth * visibleCards.length;
         return Math.min(0, containerWidth - totalWidth);
       }
 
-      let maxScroll = calculateMaxScroll();
-
-      window.scrollNews = function(direction, trackId) {
-        const track = document.getElementById(trackId);
-        let currentPosition = trackId === 'newsTrack' ? window.newsCurrentPosition : window.patentsCurrentPosition;
-        let maxScroll = trackId === 'newsTrack' ? window.newsMaxScroll : window.patentsMaxScroll;
-        const cards = track.querySelectorAll(`.${trackId.includes('news') ? 'news-card' : 'patents-card'}`);
-        const slider = track.parentElement;
-
-        const cardsToScroll = Math.max(1, Math.floor(Math.floor(slider.offsetWidth / cardWidth) / 2));
-        currentPosition -= direction * cardWidth * cardsToScroll;
-        maxScroll = calculateMaxScroll();
-
-        if (currentPosition > 0) {
-          currentPosition = 0;
-        }
-        if (currentPosition < maxScroll) {
-          currentPosition = maxScroll;
-        }
-
-        track.style.transform = `translateX(${currentPosition}px)`;
-        if (trackId === 'newsTrack') {
-          window.newsCurrentPosition = currentPosition;
-          window.newsMaxScroll = maxScroll;
-        } else {
-          window.patentsCurrentPosition = currentPosition;
-          window.patentsMaxScroll = maxScroll;
-        }
-      };
+      // Initialize position trackers
+      if (isNewsTrack) {
+        window.newsCurrentPosition = 0;
+        window.newsMaxScroll = calculateMaxScroll();
+      } else {
+        window.patentsCurrentPosition = 0;
+        window.patentsMaxScroll = calculateMaxScroll();
+      }
 
       searchInput.addEventListener('input', () => {
         const query = searchInput.value.toLowerCase().trim();
         let queries = [];
+        
         if (query.includes('+')) {
           queries = query.split('+').map(q => q.trim());
         } else if (query.includes(',')) {
@@ -597,9 +580,11 @@
           queries = [query];
         }
 
-        cards.forEach(card => {
-          const tags = card.getAttribute('data-tags').toLowerCase().split(',');
+        const allCards = track.querySelectorAll(`.${cardClass}`);
+        allCards.forEach(card => {
+          const tags = card.getAttribute('data-tags').toLowerCase().split(',').map(t => t.trim());
           let shouldShow = false;
+          
           if (query === '') {
             shouldShow = true;
           } else if (query.includes('+')) {
@@ -615,18 +600,18 @@
           }
         });
 
-        currentPosition = 0;
-        maxScroll = calculateMaxScroll();
-        track.style.transform = `translateX(0px)`;
-        if (trackId === 'newsTrack') {
-          window.newsCurrentPosition = currentPosition;
-          window.newsMaxScroll = maxScroll;
+        // Reset position after filtering
+        if (isNewsTrack) {
+          window.newsCurrentPosition = 0;
+          window.newsMaxScroll = calculateMaxScroll();
         } else {
-          window.patentsCurrentPosition = currentPosition;
-          window.patentsMaxScroll = maxScroll;
+          window.patentsCurrentPosition = 0;
+          window.patentsMaxScroll = calculateMaxScroll();
         }
+        track.style.transform = 'translateX(0px)';
       });
 
+      // Touch support
       let touchStartX = 0;
       let touchEndX = 0;
       let isDragging = false;
@@ -640,7 +625,8 @@
         if (!isDragging) return;
         touchEndX = e.changedTouches[0].screenX;
         const deltaX = touchEndX - touchStartX;
-        track.style.transform = `translateX(${(trackId === 'newsTrack' ? window.newsCurrentPosition : window.patentsCurrentPosition) + deltaX}px)`;
+        const currentPos = isNewsTrack ? window.newsCurrentPosition : window.patentsCurrentPosition;
+        track.style.transform = `translateX(${currentPos + deltaX}px)`;
       });
 
       slider.addEventListener('touchend', () => {
@@ -651,24 +637,61 @@
         if (Math.abs(deltaX) > threshold) {
           scrollNews(deltaX > 0 ? -1 : 1, trackId);
         } else {
-          track.style.transform = `translateX(${(trackId === 'newsTrack' ? window.newsCurrentPosition : window.patentsCurrentPosition)}px)`;
+          const currentPos = isNewsTrack ? window.newsCurrentPosition : window.patentsCurrentPosition;
+          track.style.transform = `translateX(${currentPos}px)`;
         }
       });
 
+      // Handle resize
       window.addEventListener('resize', () => {
-        currentPosition = 0;
-        maxScroll = calculateMaxScroll();
-        track.style.transform = `translateX(0px)`;
-        if (trackId === 'newsTrack') {
-          window.newsCurrentPosition = currentPosition;
-          window.newsMaxScroll = maxScroll;
+        if (isNewsTrack) {
+          window.newsCurrentPosition = 0;
+          window.newsMaxScroll = calculateMaxScroll();
         } else {
-          window.patentsCurrentPosition = currentPosition;
-          window.patentsMaxScroll = maxScroll;
+          window.patentsCurrentPosition = 0;
+          window.patentsMaxScroll = calculateMaxScroll();
         }
+        track.style.transform = 'translateX(0px)';
       });
     }
 
+    window.scrollNews = function(direction, trackId) {
+      const track = document.getElementById(trackId);
+      const isNewsTrack = trackId === 'newsTrack';
+      const slider = track.parentElement;
+      const cardWidth = 315;
+
+      let currentPosition = isNewsTrack ? window.newsCurrentPosition : window.patentsCurrentPosition;
+      let maxScroll = isNewsTrack ? window.newsMaxScroll : window.patentsMaxScroll;
+
+      const cardsToScroll = Math.max(1, Math.floor(Math.floor(slider.offsetWidth / cardWidth) / 2));
+      currentPosition -= direction * cardWidth * cardsToScroll;
+
+      // Recalculate max scroll
+      const visibleCards = Array.from(track.querySelectorAll(`.${isNewsTrack ? 'news-card' : 'patents-card'}`))
+        .filter(card => !card.classList.contains('hidden'));
+      const totalWidth = cardWidth * visibleCards.length;
+      maxScroll = Math.min(0, slider.offsetWidth - totalWidth);
+
+      if (currentPosition > 0) {
+        currentPosition = 0;
+      }
+      if (currentPosition < maxScroll) {
+        currentPosition = maxScroll;
+      }
+
+      track.style.transform = `translateX(${currentPosition}px)`;
+      
+      if (isNewsTrack) {
+        window.newsCurrentPosition = currentPosition;
+        window.newsMaxScroll = maxScroll;
+      } else {
+        window.patentsCurrentPosition = currentPosition;
+        window.patentsMaxScroll = maxScroll;
+      }
+    };
+
+    // Initialize both sliders
     window.newsCurrentPosition = 0;
     window.newsMaxScroll = 0;
     window.patentsCurrentPosition = 0;
