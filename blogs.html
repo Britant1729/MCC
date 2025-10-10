@@ -1,1 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Blog</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+
+    .blog-section {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      margin-bottom: 40px;
+    }
+
+    .blog-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #005599;
+      padding-bottom: 15px;
+      margin-bottom: 40px;
+    }
+
+    .blog-header h2 {
+      color: #005599;
+      font-size: 28px;
+      margin: 0;
+    }
+
+    .blog-header a {
+      text-decoration: none;
+      color: #ff6600;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .blog-header a:hover {
+      text-decoration: underline;
+    }
+
+    .search-container {
+      margin-bottom: 20px;
+    }
+
+    .search-container input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      outline: none;
+    }
+
+    .search-container input:focus {
+      border-color: #005599;
+      box-shadow: 0 0 5px rgba(0, 85, 153, 0.3);
+    }
+
+    .scroll-container {
+      position: relative;
+      padding: 0 60px;
+      touch-action: pan-y;
+    }
+
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 50px;
+      height: 50px;
+      background: #005599;
+      border: none;
+      border-radius: 50%;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s ease;
+      z-index: 10;
+    }
+
+    .arrow:hover {
+      background: #003d73;
+    }
+
+    .arrow:active {
+      transform: translateY(-50%) scale(0.95);
+    }
+
+    .arrow-left {
+      left: 0;
+    }
+
+    .arrow-right {
+      right: 0;
+    }
+
+    .blog-slider {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .blog-track {
+      display: flex;
+      gap: 15px;
+      transition: transform 0.5s ease;
+    }
+
+    .blog-card {
+      flex: 0 0 300px;
+      background: #fafafa;
+      border: 1px solid #ddd;
+      border-top: 4px solid #ff6600;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .blog-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .blog-card.hidden {
+      display: none;
+    }
+
+    .blog-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .category-tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      background: #ddd;
+      border: none;
+      cursor: pointer;
+      margin: 0 5px;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .tab.active {
+      background: #005599;
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      main {
+        padding: 20px 10px;
+      }
+
+      .blog-section {
+        padding: 20px;
+      }
+
+      .scroll-container {
+        padding: 0 50px;
+      }
+
+      .arrow {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+      }
+
+      .blog-card {
+        flex: 0 0 250px;
+      }
+
+      .blog-header h2 {
+        font-size: 22px;
+      }
+
+      .blog-header {
+        margin-bottom: 30px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .scroll-container {
+        padding: 0 40px;
+      }
+
+      .arrow {
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+      }
+
+      .blog-card {
+        flex: 0 0 220px;
+      }
+
+      .blog-header h2 {
+        font-size: 20px;
+      }
+
+      .blog-header a {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Blog</h1>
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <div class="dropdown">
+      <a href="#">What's New ▾</a>
+      <div class="dropdown-content">
+        <a href="news.html">News</a>
+        <a href="scientific.html">Scientific Advancements</a>
+        <a href="reports.html">Reports</a>
+        <a href="miscellaneous.html">Miscellaneous</a>
+      </div>
+    </div>
+    <a href="events.html">Events</a>
+    <a href="people_in_quantum.html">People in Quantum</a>
+    <a href="startups.html">For Startups</a>
+    <a href="education.html">Quantum Education</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <main>
+    <div class="category-tabs">
+      <button class="tab active" onclick="openCategory('industry')">Industry</button>
+      <button class="tab" onclick="openCategory('academic')">Academic</button>
+      <button class="tab" onclick="openCategory('others')">Others</button>
+    </div>
+
+    <!-- Industry Section -->
+    <section class="blog-section category-section" id="industry-section" style="display: block;">
+      <div class="blog-header">
+        <h2>Industry Blogs</h2>
+        <a href="view_all.html">View all</a>
+      </div>
+
+      <div class="search-container">
+        <input type="text" id="industrySearchInput" placeholder="Search blogs (e.g., quantum+ai, quantum,ai)">
+      </div>
+
+      <div class="scroll-container">
+        <button class="arrow arrow-left" onclick="scrollSlider('industryTrack', -1)">‹</button>
+
+        <div class="blog-slider">
+          <div class="blog-track" id="industryTrack">
+            <a href="https://phys.org/news/2025-09-qubit-neutral-atom-array-reloads.html" target="_blank" class="blog-card" data-search="computing technology neutral atoms array qubits 3000 New improved 3,000-qubit neutral atom array system reloads atoms continuously for more than two hours">
+              <img src="https://via.placeholder.com/300x200?text=New+3,000-qubit+neutral+atom+array" alt="New, improved 3,000-qubit neutral atom array system reloads atoms continuously for more than two hours">
+            </a>
+            <a href="https://phys.org/news/2025-09-scalable-accurate-tool-characterize-entanglement.html" target="_blank" class="blog-card" data-search="computing processors entanglement A scalable and accurate tool to characterize entanglement in quantum processors">
+              <img src="https://via.placeholder.com/300x200?text=Scalable+tool+for+entanglement" alt="A scalable and accurate tool to characterize entanglement in quantum processors">
+            </a>
+          </div>
+        </div>
+
+        <button class="arrow arrow-right" onclick="scrollSlider('industryTrack', 1)">›</button>
+      </div>
+    </section>
+
+    <!-- Academic Section -->
+    <section class="blog-section category-section" id="academic-section" style="display: none;">
+      <div class="blog-header">
+        <h2>Academic Blogs</h2>
+        <a href="view_all.html">View all</a>
+      </div>
+
+      <div class="search-container">
+        <input type="text" id="academicSearchInput" placeholder="Search blogs (e.g., quantum+ai, quantum,ai)">
+      </div>
+
+      <div class="scroll-container">
+        <button class="arrow arrow-left" onclick="scrollSlider('academicTrack', -1)">‹</button>
+
+        <div class="blog-slider">
+          <div class="blog-track" id="academicTrack">
+            <a href="https://phys.org/news/2025-09-qubit-neutral-atom-array-reloads.html" target="_blank" class="blog-card" data-search="computing technology neutral atoms array qubits 3000 New improved 3,000-qubit neutral atom array system reloads atoms continuously for more than two hours">
+              <img src="https://via.placeholder.com/300x200?text=New+3,000-qubit+neutral+atom+array" alt="New, improved 3,000-qubit neutral atom array system reloads atoms continuously for more than two hours">
+            </a>
+            <a href="https://phys.org/news/2025-09-scalable-accurate-tool-characterize-entanglement.html" target="_blank" class="blog-card" data-search="computing processors entanglement A scalable and accurate tool to characterize entanglement in quantum processors">
+              <img src="https://via.placeholder.com/300x200?text=Scalable+tool+for+entanglement" alt="A scalable and accurate tool to characterize entanglement in quantum processors">
+            </a>
+          </div>
+        </div>
+
+        <button class="arrow arrow-right" onclick="scrollSlider('academicTrack', 1)">›</button>
+      </div>
+    </section>
+
+    <!-- Others Section -->
+    <section class="blog-section category-section" id="others-section" style="display: none;">
+      <div class="blog-header">
+        <h2>Others Blogs</h2>
+        <a href="view_all.html">View all</a>
+      </div>
+
+      <div class="search-container">
+        <input type="text" id="othersSearchInput" placeholder="Search blogs (e.g., quantum+ai, quantum,ai)">
+      </div>
+
+      <div class="scroll-container">
+        <button class="arrow arrow-left" onclick="scrollSlider('othersTrack', -1)">‹</button>
+
+        <div class="blog-slider">
+          <div class="blog-track" id="othersTrack">
+            <a href="https://phys.org/news/2025-09-qubit-neutral-atom-array-reloads.html" target="_blank" class="blog-card" data-search="computing technology neutral atoms array qubits 3000 New improved 3,000-qubit neutral atom array system reloads atoms continuously for more than two hours">
+              <img src="https://via.placeholder.com/300x200?text=New+3,000-qubit+neutral+atom+array" alt="New, improved 3,000-qubit neutral atom array system reloads atoms continuously for more than two hours">
+            </a>
+            <a href="https://phys.org/news/2025-09-scalable-accurate-tool-characterize-entanglement.html" target="_blank" class="blog-card" data-search="computing processors entanglement A scalable and accurate tool to characterize entanglement in quantum processors">
+              <img src="https://via.placeholder.com/300x200?text=Scalable+tool+for+entanglement" alt="A scalable and accurate tool to characterize entanglement in quantum processors">
+            </a>
+          </div>
+        </div>
+
+        <button class="arrow arrow-right" onclick="scrollSlider('othersTrack', 1)">›</button>
+      </div>
+    </section>
+
+    <!-- Common Section -->
+    <section class="blog-section">
+      <div class="blog-header">
+        <h2>Common Blogs</h2>
+        <a href="view_all.html">View all</a>
+      </div>
+
+      <div class="search-container">
+        <input type="text" id="commonSearchInput" placeholder="Search blogs (e.g., quantum+ai, quantum,ai)">
+      </div>
+
+      <div class="scroll-container">
+        <button class="arrow arrow-left" onclick="scrollSlider('commonTrack', -1)">‹</button>
+
+        <div class="blog-slider">
+          <div class="blog-track" id="commonTrack">
+            <a href="https://phys.org/news/2025-09-qubit-neutral-atom-array-reloads.html" target="_blank" class="blog-card" data-search="computing technology neutral atoms array qubits 3000 New improved 3,000-qubit neutral atom array system reloads atoms continuously for more than two hours">
+              <img src="https://via.placeholder.com/300x200?text=New+3,000-qubit+neutral+atom+array" alt="New, improved 3,000-qubit neutral atom array system reloads atoms continuously for more than two hours">
+            </a>
+            <a href="https://phys.org/news/2025-09-scalable-accurate-tool-characterize-entanglement.html" target="_blank" class="blog-card" data-search="computing processors entanglement A scalable and accurate tool to characterize entanglement in quantum processors">
+              <img src="https://via.placeholder.com/300x200?text=Scalable+tool+for+entanglement" alt="A scalable and accurate tool to characterize entanglement in quantum processors">
+            </a>
+          </div>
+        </div>
+
+        <button class="arrow arrow-right" onclick="scrollSlider('commonTrack', 1)">›</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 MCC - Mission Coordination Cell.</p>
+  </footer>
+
+  <script>
+    function isFuzzyMatch(text, query) {
+      if (!query) return true;
+      const escapedQuery = query.split('').map(char => char.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')).join('.*');
+      const regex = new RegExp(escapedQuery, 'i');
+      return regex.test(text);
+    }
+
+    function setupSlider(trackId, searchInputId) {
+      const track = document.getElementById(trackId);
+      const searchInput = document.getElementById(searchInputId);
+      const slider = track.parentElement;
+      const cardWidth = 315; // 300px width + 15px gap
+
+      function getVisibleCards() {
+        return Array.from(track.querySelectorAll('.blog-card')).filter(card => !card.classList.contains('hidden'));
+      }
+
+      function calculateMaxScroll() {
+        const visibleCards = getVisibleCards();
+        const containerWidth = slider.offsetWidth;
+        const totalWidth = cardWidth * visibleCards.length;
+        return Math.min(0, containerWidth - totalWidth);
+      }
+
+      // Initialize position trackers
+      window[trackId + 'CurrentPosition'] = 0;
+      window[trackId + 'MaxScroll'] = calculateMaxScroll();
+
+      searchInput.addEventListener('input', () => {
+        const query = searchInput.value.toLowerCase().trim();
+        let queries = [];
+        let isOr = false;
+
+        if (query.includes('+')) {
+          queries = query.split('+').map(q => q.trim());
+          isOr = true;
+        } else if (query.includes(',')) {
+          queries = query.split(',').map(q => q.trim());
+        } else {
+          queries = [query];
+        }
+
+        const allCards = track.querySelectorAll('.blog-card');
+        allCards.forEach(card => {
+          const searchText = card.getAttribute('data-search').toLowerCase();
+          let shouldShow = false;
+
+          if (query === '') {
+            shouldShow = true;
+          } else if (isOr) {
+            shouldShow = queries.some(q => isFuzzyMatch(searchText, q));
+          } else {
+            shouldShow = queries.every(q => isFuzzyMatch(searchText, q));
+          }
+
+          if (shouldShow) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+
+        // Reset position after filtering
+        window[trackId + 'CurrentPosition'] = 0;
+        window[trackId + 'MaxScroll'] = calculateMaxScroll();
+        track.style.transform = 'translateX(0px)';
+      });
+
+      // Touch support
+      let touchStartX = 0;
+      let touchEndX = 0;
+      let isDragging = false;
+
+      slider.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        isDragging = true;
+      });
+
+      slider.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        touchEndX = e.changedTouches[0].screenX;
+        const deltaX = touchEndX - touchStartX;
+        const currentPos = window[trackId + 'CurrentPosition'];
+        track.style.transform = `translateX(${currentPos + deltaX}px)`;
+      });
+
+      slider.addEventListener('touchend', () => {
+        if (!isDragging) return;
+        isDragging = false;
+        const deltaX = touchEndX - touchStartX;
+        const threshold = cardWidth / 3;
+        if (Math.abs(deltaX) > threshold) {
+          scrollSlider(trackId, deltaX > 0 ? -1 : 1);
+        } else {
+          const currentPos = window[trackId + 'CurrentPosition'];
+          track.style.transform = `translateX(${currentPos}px)`;
+        }
+      });
+
+      // Handle resize
+      window.addEventListener('resize', () => {
+        window[trackId + 'CurrentPosition'] = 0;
+        window[trackId + 'MaxScroll'] = calculateMaxScroll();
+        track.style.transform = 'translateX(0px)';
+      });
+    }
+
+    window.scrollSlider = function(trackId, direction) {
+      const track = document.getElementById(trackId);
+      const slider = track.parentElement;
+      const cardWidth = 315;
+
+      let currentPosition = window[trackId + 'CurrentPosition'];
+      let maxScroll = window[trackId + 'MaxScroll'];
+
+      const cardsToScroll = Math.max(1, Math.floor(Math.floor(slider.offsetWidth / cardWidth) / 2));
+      currentPosition -= direction * cardWidth * cardsToScroll;
+
+      // Recalculate max scroll
+      const visibleCards = Array.from(track.querySelectorAll('.blog-card'))
+        .filter(card => !card.classList.contains('hidden'));
+      const totalWidth = cardWidth * visibleCards.length;
+      maxScroll = Math.min(0, slider.offsetWidth - totalWidth);
+
+      if (currentPosition > 0) {
+        currentPosition = 0;
+      }
+      if (currentPosition < maxScroll) {
+        currentPosition = maxScroll;
+      }
+
+      track.style.transform = `translateX(${currentPosition}px)`;
+
+      window[trackId + 'CurrentPosition'] = currentPosition;
+      window[trackId + 'MaxScroll'] = maxScroll;
+    };
+
+    window.openCategory = function(cat) {
+      document.querySelectorAll('.category-section').forEach(section => {
+        section.style.display = 'none';
+      });
+      document.getElementById(cat + '-section').style.display = 'block';
+
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      event.target.classList.add('active');
+    };
+
+    // Initialize sliders
+    setupSlider('industryTrack', 'industrySearchInput');
+    setupSlider('academicTrack', 'academicSearchInput');
+    setupSlider('othersTrack', 'othersSearchInput');
+    setupSlider('commonTrack', 'commonSearchInput');
+  </script>
+</body>
+</html>
