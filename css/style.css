@@ -353,3 +353,13 @@ img {
         font-size: 16px;
     }
 }
+.error {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 5px;
+  display: block;
+}
+#formMessage {
+  margin-top: 10px;
+  font-weight: bold;
+}
